@@ -13,15 +13,7 @@ type ContactProps = {
 };
 
 const Contact: NextPage<ContactProps> = ({ basics }) => {
-  const {
-    name,
-    contactIntro,
-    location,
-    email,
-    website,
-    resumeLink,
-    socialLinks,
-  } = basics[0];
+  const { name, contactIntro, location, email, website } = basics[0];
   return (
     <div className="mx-auto">
       <Header name={name} />
@@ -41,7 +33,6 @@ const Contact: NextPage<ContactProps> = ({ basics }) => {
             location={location}
             email={email}
             website={website}
-            resumeLink={resumeLink}
           />
         </div>
       </motion.div>
