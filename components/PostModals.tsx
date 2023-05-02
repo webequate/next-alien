@@ -31,7 +31,7 @@ const PostModals: React.FC<PostModalsProps> = ({
             onClick={(e) => e.stopPropagation()}
           >
             <Image
-              src={`/${post.uri}`}
+              src={`/${Array.isArray(post.uri) ? post.uri[0] : post.uri}`}
               alt={post.title}
               width={1000}
               height={1000}

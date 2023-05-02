@@ -52,7 +52,7 @@ export const getStaticProps: GetStaticProps<HomeProps> = async () => {
   const postsCollection = db.collection<Post>("posts");
   const posts: Post[] = await postsCollection
     .find()
-    .sort({ order: 1 })
+    .sort({ creation_timestamp: -1 })
     .toArray();
 
   const basicsCollection = db.collection<Basics>("basics");
