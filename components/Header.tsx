@@ -1,6 +1,7 @@
 // components/Header.tsx
 import Link from "next/link";
 import { useState } from "react";
+import AllensAliens from "@/components/AllensAliens";
 import LayoutWidget from "@/components/LayoutWidget";
 import ThemeSwitcher from "@/components/ThemeSwitcher";
 import Hamburger from "@/components/Hamburger";
@@ -19,8 +20,8 @@ const Header: React.FC<HeaderProps> = ({ name }) => {
   return (
     <nav>
       {/* Home link */}
-      <Link href="/">
-        <h1 className="bruno text-center">ALLEN&apos;S ALIENS</h1>
+      <Link href="/" className="text-dark-1 dark:text-light-1 my-4">
+        <AllensAliens />
       </Link>
 
       <div className="container mx-auto px-2 py-3 mb-10">

@@ -4,10 +4,9 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Bruno+Ace&display=swap');
 
-h1.bruno {
+.bruno {
   font-family: 'Bruno Ace', cursive;
   font-weight: 400;
-  font-size: 7vw;
 }
 
 html,
@@ -64,21 +63,21 @@ dark:scrollToTop {
     @apply flex flex-shrink-0 items-center text-lg font-bold uppercase text-dark-2 dark:text-light-2 bg-light-1 dark:bg-dark-1 ring-1 ring-dark-3 dark:ring-light-3 p-1 ml-0 rounded-xl cursor-pointer;
   }
   .home-link .nav-link {
-    @apply mx-2 lg:mx-4 py-1 lg:py-2 duration-300;
+    @apply mx-2 lg:mx-4 py-1 lg:py-2;
   }
   /* Primary navigation */
   .nav-primary {
     @apply flex items-center text-sm lg:text-lg font-semibold rounded-full text-dark-2 dark:text-light-2 bg-light-1 dark:bg-dark-1 ring-1 ring-dark-3 dark:ring-light-3 px-3 mx-6;
   }
   .nav-primary .nav-link {
-    @apply hover:text-accent-dark dark:hover:text-accent-light mx-2 lg:mx-4 py-1 lg:py-2 duration-300;
+    @apply hover:text-accent-dark dark:hover:text-accent-light mx-2 lg:mx-4 py-1 lg:py-2;
   }
   /* Secondary navigation */
   .nav-secondary {
     @apply flex text-sm font-semibold text-dark-2 dark:text-light-2 rounded-full px-3 mx-6 bg-light-1 dark:bg-dark-1 ring-1 ring-dark-3 dark:ring-light-3;
   }
   .nav-secondary .nav-link {
-    @apply hover:text-accent-dark dark:hover:text-accent-light sm:mx-4 sm:py-2 duration-300;
+    @apply hover:text-accent-dark dark:hover:text-accent-light sm:mx-4 sm:py-2;
   }
   /* Mobile navigation */
   .nav-mobile {

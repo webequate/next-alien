@@ -1,6 +1,7 @@
 // components/PostGrid.tsx
 import { Post } from "@/types/post";
 import Image from "next/image";
+import { parseAlienCaption } from "@/lib/utils";
 
 interface PostGridProps {
   posts: Post[];
@@ -10,30 +11,40 @@ interface PostGridProps {
 const PostGrid: React.FC<PostGridProps> = ({ posts, setActiveModal }) => {
   return (
     <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-10 text-light-1 dark:text-light-1">
-      {posts.map((post, index) => (
-        <a
-          key={index}
-          onClick={() => setActiveModal(index)}
-          className="group relative cursor-pointer"
-        >
-          <Image
-            src={`/${Array.isArray(post.uri) ? post.uri[0] : post.uri}`}
-            alt={post.title}
-            width={500}
-            height={500}
-            className="rounded shadow-md transition duration-200 ease-in-out transform"
-          />
-          <div className="absolute inset-0 bg-black opacity-0 group-hover:opacity-50 transition duration-200 rounded shadow-md"></div>
-          <div className="absolute inset-0 items-center justify-center opacity-0 group-hover:opacity-100 transition duration-200 p-4">
-            <h2 className="text-xl mb-2">
-              {decodeURIComponent('"' + post.title + '"')}
-            </h2>
-          </div>
-          <div className="absolute inset-0 flex items-center justify-center text-white opacity-0 group-hover:opacity-100 transition duration-200">
-            <span className="text-4xl">+</span>
-          </div>
-        </a>
-      ))}
+      {posts.map((post, index) => {
+        const caption = parseAlienCaption(post.title);
+        return (
+          <a
+            key={index}
+            onClick={() => setActiveModal(index)}
+            className="group relative cursor-pointer"
+          >
+            <Image
+              src={`/${Array.isArray(post.uri) ? post.uri[0] : post.uri}`}
+              alt={caption.title}
+              width={500}
+              height={500}
+              className="rounded shadow-md transition duration-200 ease-in-out transform"
+            />
+            <div className="absolute inset-0 bg-black opacity-0 group-hover:opacity-50 transition duration-200 rounded shadow-md"></div>
+            <div className="absolute inset-0 items-center justify-center opacity-0 group-hover:opacity-100 transition duration-200 p-4">
+              <h2 className="text-xl mb-2">{caption.title}</h2>
+              <ul className="list-outside list-disc ml-5">
+                {caption.additional.map((line, index) => {
+                  return (
+                    <li key={index} className="text-base">
+                      {line}
+                    </li>
+                  );
+                })}
+              </ul>
+            </div>
+            <div className="absolute inset-0 flex items-center justify-center text-white opacity-0 group-hover:opacity-100 transition duration-200">
+              <span className="text-4xl">+</span>
+            </div>
+          </a>
+        );
+      })}
     </div>
   );
 };
