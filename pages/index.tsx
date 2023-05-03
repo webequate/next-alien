@@ -5,7 +5,7 @@ import { connectToDatabase } from "@/lib/mongodb";
 import { Basics, SocialLink } from "@/types/basics";
 import { Post } from "@/types/post";
 import Header from "@/components/Header";
-import Introduction from "@/components/Introduction";
+import BusinessCard from "@/components/BusinessCard";
 import PostGrid from "@/components/PostGrid";
 import PostModals from "@/components/PostModals";
 import Footer from "@/components/Footer";
@@ -23,7 +23,7 @@ const Home: NextPage<HomeProps> = ({ name, abouts, socialLinks, posts }) => {
 
   return (
     <div className="mx-auto">
-      <Header name={name} />
+      <Header name={name} socialLink={socialLinks[0]} />
 
       <motion.div
         initial={{ opacity: 0 }}
@@ -31,7 +31,14 @@ const Home: NextPage<HomeProps> = ({ name, abouts, socialLinks, posts }) => {
         transition={{ ease: "easeInOut", duration: 0.9, delay: 0.2 }}
         className="text-base text-dark-2 dark:text-light-2"
       >
-        <Introduction abouts={abouts} socialLinks={socialLinks} />
+        <BusinessCard />
+
+        <div className="text-xl font-bold text-center pb-4">
+          {abouts.map((about, index) => (
+            <h2 key={index}>{about}</h2>
+          ))}
+        </div>
+
         <PostGrid posts={posts} setActiveModal={setActiveModal} />
 
         <PostModals
@@ -41,7 +48,7 @@ const Home: NextPage<HomeProps> = ({ name, abouts, socialLinks, posts }) => {
         />
       </motion.div>
 
-      <Footer name={name} />
+      <Footer name={name} socialLinks={socialLinks} />
     </div>
   );
 };

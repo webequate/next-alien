@@ -13,10 +13,11 @@ type ContactProps = {
 };
 
 const Contact: NextPage<ContactProps> = ({ basics }) => {
-  const { name, contactIntro, location, email, website } = basics[0];
+  const { name, socialLinks, contactIntro, location, email, website } =
+    basics[0];
   return (
     <div className="mx-auto">
-      <Header name={name} />
+      <Header name={name} socialLink={socialLinks[0]} />
 
       <motion.div
         initial={{ opacity: 0 }}
@@ -37,7 +38,7 @@ const Contact: NextPage<ContactProps> = ({ basics }) => {
         </div>
       </motion.div>
 
-      <Footer name={name} />
+      <Footer name={name} socialLinks={socialLinks} />
     </div>
   );
 };

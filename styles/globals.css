@@ -27,7 +27,7 @@ a {
 
 /* Scroll to top style */
 .scrollToTop {
-	@apply bg-accent-dark;
+	@apply bg-accent-light;
 	@apply text-white;
 	position: fixed;
 	width: 100%;
@@ -45,10 +45,6 @@ a {
 	opacity: 1;
 }
 
-dark:scrollToTop {
-  @apply bg-accent-light;
-}
-
 @keyframes fadeIn {
 	0% {
 		opacity: 0;
@@ -63,14 +59,14 @@ dark:scrollToTop {
     @apply flex flex-shrink-0 items-center text-lg font-bold uppercase text-dark-2 dark:text-light-2 bg-light-1 dark:bg-dark-1 ring-1 ring-dark-3 dark:ring-light-3 p-1 ml-0 rounded-xl cursor-pointer;
   }
   .home-link .nav-link {
-    @apply mx-2 lg:mx-4 py-1 lg:py-2;
+    @apply mx-2 md:mx-4 py-1 md:py-2;
   }
   /* Primary navigation */
   .nav-primary {
-    @apply flex items-center text-sm lg:text-lg font-semibold rounded-full text-dark-2 dark:text-light-2 bg-light-1 dark:bg-dark-1 ring-1 ring-dark-3 dark:ring-light-3 px-3 mx-6;
+    @apply flex items-center text-sm md:text-lg font-semibold rounded-full text-dark-2 dark:text-light-2 bg-light-1 dark:bg-dark-1 ring-1 ring-dark-3 dark:ring-light-3 px-3 mx-6;
   }
   .nav-primary .nav-link {
-    @apply hover:text-accent-dark dark:hover:text-accent-light mx-2 lg:mx-4 py-1 lg:py-2;
+    @apply hover:text-accent-dark dark:hover:text-accent-light mx-2 md:mx-4 py-1 md:py-2;
   }
   /* Secondary navigation */
   .nav-secondary {

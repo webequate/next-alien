@@ -7,7 +7,7 @@ import type { AppProps } from "next/app";
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
-    <ThemeProvider attribute="class">
+    <ThemeProvider attribute="class" defaultTheme="dark">
       <AnimatePresence>
         <div className="mx-auto max-w-7xl sm:px-8 lg:px-16">
           <Layout>
