@@ -33,7 +33,7 @@ const Home: NextPage<HomeProps> = ({ name, abouts, socialLinks, posts }) => {
       >
         <BusinessCard />
 
-        <div className="text-xl font-bold text-center pb-4">
+        <div className="text-xl font-bold text-center pb-10">
           {abouts.map((about, index) => (
             <h2 key={index}>{about}</h2>
           ))}
