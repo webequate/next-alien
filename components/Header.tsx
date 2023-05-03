@@ -31,13 +31,13 @@ const Header: React.FC<HeaderProps> = ({ name, socialLink }) => {
 
       <div className="container mx-auto px-2 py-3 mb-6 md:mb-10">
         <div className="flex justify-center items-center">
-          {/* Extraneous invisible layout widget */}
+          {/* Social link button */}
           <div className="flex mr-auto">
             <SocialButton name={socialLink.name} url={socialLink.url} />
           </div>
 
           {/* Navigation links - Large screen */}
-          <div className="hidden md:flex font-general-medium m-0 sm:ml-4 sm:p-0">
+          <div className="hidden md:flex font-general-medium m-0 sm:p-0">
             <div className="nav-primary">
               <Link href="/" aria-label="Home" className="nav-link">
                 Home
