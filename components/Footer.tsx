@@ -17,13 +17,13 @@ const Footer: React.FC<FooterProps> = ({ name, socialLinks }) => {
           {/* Footer links - large screen */}
           <div className="m-0 mt-8 hidden sm:flex sm:p-0 justify-center items-center">
             <div className="nav-secondary">
-              <Link href="/" aria-label="Home" className="nav-link">
+              <Link href="/" aria-label="Home">
                 Home
               </Link>
-              <Link href="/about" aria-label="About" className="nav-link">
+              <Link href="/about" aria-label="About">
                 About
               </Link>
-              <Link href="/contact" aria-label="Contact" className="nav-link">
+              <Link href="/contact" aria-label="Contact">
                 Contact Me
               </Link>
             </div>

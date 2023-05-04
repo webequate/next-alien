@@ -55,43 +55,32 @@ a {
 }
 
 @layer components {
-  .home-link {
-    @apply flex flex-shrink-0 items-center text-lg font-bold uppercase text-dark-2 dark:text-light-2 bg-light-1 dark:bg-dark-1 ring-1 ring-dark-3 dark:ring-light-3 p-1 ml-0 rounded-xl cursor-pointer;
-  }
-  .home-link .nav-link {
-    @apply mx-2 md:mx-4 py-1 md:py-2;
-  }
   /* Primary navigation */
   .nav-primary {
     @apply flex items-center text-sm md:text-lg font-semibold rounded-full text-dark-2 dark:text-light-2 bg-light-1 dark:bg-dark-1 ring-1 ring-dark-3 dark:ring-light-3 px-3 mx-6;
   }
-  .nav-primary .nav-link {
+  .nav-primary a {
     @apply hover:text-accent-dark dark:hover:text-accent-light mx-2 md:mx-4 py-1 md:py-2;
+  }
+  .nav-primary a.active {
+    @apply text-accent-dark dark:text-accent-light;
   }
   /* Secondary navigation */
   .nav-secondary {
     @apply flex text-sm font-semibold text-dark-2 dark:text-light-2 rounded-full px-3 mx-6 bg-light-1 dark:bg-dark-1 ring-1 ring-dark-3 dark:ring-light-3;
   }
-  .nav-secondary .nav-link {
+  .nav-secondary a {
     @apply hover:text-accent-dark dark:hover:text-accent-light sm:mx-4 sm:py-2;
   }
   /* Mobile navigation */
   .nav-mobile {
     @apply block text-lg text-left m-0 mt-3 py-3 justify-between items-center;
   }
-  .nav-mobile .nav-link {
+  .nav-mobile a {
     @apply block text-dark-2 dark:text-light-2 hover:text-accent-light dark:hover:text-accent-light py-2 border-b-2 md:border-b-0 border-dark-3 dark:border-light-3;
   }
-  /* Text gradient */
-  .text-color-gradient {
-    @apply text-transparent bg-clip-text bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500;
-  }
-  /* Background gradient */
-  .bg-color-gradient {
-    @apply bg-gradient-to-br from-blue-500 to-purple-500;
-  }
-  .bg-color-gradient-skill {
-    @apply bg-gradient-to-b from-blue-500 to-purple-500;
+  .nav-mobile a.active {
+    @apply text-accent-light dark:text-accent-light;
   }
 }
 
