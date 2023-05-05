@@ -30,8 +30,9 @@ const PostModals: React.FC<PostModalsProps> = ({
           >
             <div
               ref={modalContentRef}
-              className="modal-content text-dark-2 dark:text-light-2 bg-light-1 dark:bg-dark-1"
-              onClick={(e) => e.stopPropagation()}
+              className="modal-content text-dark-2 dark:text-light-2 bg-light-1 dark:bg-dark-1 p-4 md:p-8"
+              // onClick={(e) => e.stopPropagation()}
+              onClick={() => setActiveModal(null)}
             >
               <Image
                 src={`/${Array.isArray(post.uri) ? post.uri[0] : post.uri}`}
@@ -40,17 +41,15 @@ const PostModals: React.FC<PostModalsProps> = ({
                 height={1000}
                 className="w-full mb-4"
               />
-              <div className="mx-auto flex text-xl">
-                <h2 className="">{caption.title}</h2>
-                <ul className="list-disc flex">
-                  {caption.additional.map((line, index) => {
-                    return (
-                      <li key={index} className="ml-8">
-                        {line}
-                      </li>
-                    );
-                  })}
-                </ul>
+              <div className="mx-auto">
+                <h2 className="text-2xl font-bold mb-1">{caption.title}</h2>
+                {caption.additional.map((line, index) => {
+                  return (
+                    <p key={index} className="text-xl mb-1">
+                      {line}
+                    </p>
+                  );
+                })}
               </div>
             </div>
           </div>

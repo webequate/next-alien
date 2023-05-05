@@ -10,7 +10,7 @@ interface PostGridProps {
 
 const PostGrid: React.FC<PostGridProps> = ({ posts, setActiveModal }) => {
   return (
-    <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-10 text-light-1 dark:text-light-1">
+    <div className="grid grid-cols-2 md:grid-cols-3 gap-5 md:gap-10 text-light-1 dark:text-light-1">
       {posts.map((post, index) => {
         const caption = parseAlienCaption(post.title);
         return (
@@ -26,8 +26,8 @@ const PostGrid: React.FC<PostGridProps> = ({ posts, setActiveModal }) => {
               height={600}
               className="rounded shadow-md transition duration-200 ease-in-out transform"
             />
-            <div className="absolute inset-0 bg-black opacity-0 group-hover:opacity-50 transition duration-200 rounded shadow-md"></div>
-            <div className="absolute inset-0 items-center justify-center opacity-0 group-hover:opacity-100 transition duration-200 p-4">
+            <div className="absolute inset-0 bg-black opacity-0 md:group-hover:opacity-50 transition duration-200 rounded shadow-md"></div>
+            <div className="absolute inset-0 items-center justify-center opacity-0 md:group-hover:opacity-100 transition duration-200 p-4">
               <h2 className="text-xl mb-2">{caption.title}</h2>
               <ul className="list-outside list-disc ml-5">
                 {caption.additional.map((line, index) => {
@@ -39,7 +39,7 @@ const PostGrid: React.FC<PostGridProps> = ({ posts, setActiveModal }) => {
                 })}
               </ul>
             </div>
-            <div className="absolute inset-0 flex items-center justify-center text-white opacity-0 group-hover:opacity-100 transition duration-200">
+            <div className="absolute inset-0 flex items-center justify-center text-white opacity-0 md:group-hover:opacity-100 transition duration-200">
               <span className="text-4xl">+</span>
             </div>
           </a>

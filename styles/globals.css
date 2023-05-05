@@ -60,7 +60,7 @@ a {
     @apply flex items-center text-sm md:text-lg font-semibold rounded-full text-dark-2 dark:text-light-2 bg-light-1 dark:bg-dark-1 ring-1 ring-dark-3 dark:ring-light-3 px-3 mx-6;
   }
   .nav-primary a {
-    @apply hover:text-accent-dark dark:hover:text-accent-light mx-2 md:mx-4 py-1 md:py-2;
+    @apply hover:text-accent-dark dark:hover:text-accent-light mx-2 md:mx-4 py-1 md:py-2 duration-300;
   }
   .nav-primary a.active {
     @apply text-accent-dark dark:text-accent-light;
@@ -70,14 +70,14 @@ a {
     @apply flex text-sm font-semibold text-dark-2 dark:text-light-2 rounded-full px-3 mx-6 bg-light-1 dark:bg-dark-1 ring-1 ring-dark-3 dark:ring-light-3;
   }
   .nav-secondary a {
-    @apply hover:text-accent-dark dark:hover:text-accent-light sm:mx-4 sm:py-2;
+    @apply hover:text-accent-dark dark:hover:text-accent-light sm:mx-4 sm:py-2 duration-300;
   }
   /* Mobile navigation */
   .nav-mobile {
     @apply block text-lg text-left m-0 mt-3 py-3 justify-between items-center;
   }
   .nav-mobile a {
-    @apply block text-dark-2 dark:text-light-2 hover:text-accent-light dark:hover:text-accent-light py-2 border-b-2 md:border-b-0 border-dark-3 dark:border-light-3;
+    @apply block text-dark-2 dark:text-light-2 hover:text-accent-light dark:hover:text-accent-light py-2 border-b-2 md:border-b-0 border-dark-3 dark:border-light-3 duration-300;
   }
   .nav-mobile a.active {
     @apply text-accent-light dark:text-accent-light;
@@ -110,11 +110,10 @@ a {
 }
 
 .modal-content {
-  width: 80%;
+  width: 90%;
   max-width: 800px;
-  /* background-color: white; */
   border-radius: 8px;
-  padding: 2rem;
+  padding: 1rem;
   position: relative;
 }
 
