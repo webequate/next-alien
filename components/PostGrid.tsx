@@ -24,7 +24,7 @@ const PostGrid: React.FC<PostGridProps> = ({ posts, setActiveModal }) => {
               alt={caption.title}
               width={600}
               height={600}
-              className="rounded shadow-md transition duration-200 ease-in-out transform"
+              className="rounded shadow-md md:transition md:duration-200 md:ease-in-out md:transform"
             />
             <div className="absolute inset-0 bg-black opacity-0 md:group-hover:opacity-50 transition duration-200 rounded shadow-md"></div>
             <div className="absolute inset-0 items-center justify-center opacity-0 md:group-hover:opacity-100 transition duration-200 p-4">

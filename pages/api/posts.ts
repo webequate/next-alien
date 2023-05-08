@@ -11,6 +11,7 @@ const fetchPosts = async (req: NextApiRequest, res: NextApiResponse) => {
       .collection("posts")
       .find({})
       .sort({ creation_timestamp: 1 })
+      .limit(40)
       .toArray();
 
     res.json(data);
