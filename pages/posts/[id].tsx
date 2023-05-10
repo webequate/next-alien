@@ -5,9 +5,9 @@ import { connectToDatabase } from "@/lib/mongodb";
 import { Post } from "@/types/post";
 import { Basics, SocialLink } from "@/types/basics";
 import Header from "@/components/Header";
-import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
+import PostHeader from "@/components/PostHeader";
 import Image from "next/image";
-import Link from "next/link";
+import PostFooter from "@/components/PostFooter";
 import Footer from "@/components/Footer";
 import { useRouter } from "next/router";
 import { parseAlienCaption } from "@/lib/utils";
@@ -15,6 +15,7 @@ import { parseAlienCaption } from "@/lib/utils";
 interface PostProps {
   post: Post;
   posts: Post[];
+  featured?: boolean;
   name: string;
   socialLinks: SocialLink[];
 }
@@ -44,29 +45,11 @@ const Post: NextPage<PostProps> = ({ post, posts, name, socialLinks }) => {
         transition={{ ease: "easeInOut", duration: 0.9, delay: 0.2 }}
       >
         <div className="justify-center text-dark-1 dark:text-light-1">
-          <div className="flex justify-between text-xl sm:text-2xl md:text-3xl">
-            {prevPost ? (
-              <Link href={`/posts/${prevPost.id}`}>
-                <FaArrowLeft className="hover:text-accent-dark dark:hover:text-accent-light" />
-              </Link>
-            ) : (
-              <div className="invisible">
-                <FaArrowLeft />
-              </div>
-            )}
-            <h2 className="text-xl sm:text-2xl md:text-3xl text-center mb-4">
-              {caption.title}
-            </h2>
-            {nextPost ? (
-              <Link href={`/posts/${nextPost.id}`}>
-                <FaArrowRight className="hover:text-accent-dark dark:hover:text-accent-light" />
-              </Link>
-            ) : (
-              <div className="invisible">
-                <FaArrowRight />
-              </div>
-            )}
-          </div>
+          <PostHeader
+            title={caption.title}
+            prevId={prevPost?.id}
+            nextId={nextPost?.id}
+          />
           <Image
             src={`/${Array.isArray(post.uri) ? post.uri[0] : post.uri}`}
             alt={caption.title}
@@ -74,13 +57,7 @@ const Post: NextPage<PostProps> = ({ post, posts, name, socialLinks }) => {
             height={600}
             className="mx-auto ring-1 ring-dark-3 dark:ring-light-3 mb-4"
           />
-          {caption.additional.map((line, index) => {
-            return (
-              <p key={index} className="text-xl mb-1">
-                {line}
-              </p>
-            );
-          })}
+          <PostFooter additional={caption.additional} />
         </div>
       </motion.div>
 
@@ -90,18 +67,24 @@ const Post: NextPage<PostProps> = ({ post, posts, name, socialLinks }) => {
 };
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const db = await connectToDatabase(process.env.MONGODB_URI!);
+  try {
+    const db = await connectToDatabase(process.env.MONGODB_URI!);
 
-  const postsCollection = db.collection<Post>("posts");
-  const posts: Post[] = await postsCollection.find().sort({ id: -1 }).toArray();
+    const postsCollection = db.collection<Post>("posts");
+    const posts: Post[] = await postsCollection
+      .find()
+      .sort({ id: -1 })
+      .toArray();
 
-  const paths = posts
-    .filter((post) => post.id !== undefined)
-    .map((post) => ({
+    const paths = posts.map((post) => ({
       params: { id: post.id.toString() },
     }));
 
-  return { paths, fallback: true };
+    return { paths, fallback: true };
+  } catch (error) {
+    console.error("Error in getStaticPaths:", error);
+    throw error;
+  }
 };
 
 export const getStaticProps: GetStaticProps<PostProps> = async ({ params }) => {
