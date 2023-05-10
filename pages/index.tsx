@@ -7,9 +7,7 @@ import { Post } from "@/types/post";
 import Header from "@/components/Header";
 import BusinessCard from "@/components/BusinessCard";
 import PostGrid from "@/components/PostGrid";
-import PostModals from "@/components/PostModals";
 import Footer from "@/components/Footer";
-import { useState } from "react";
 
 interface HomeProps {
   name: string;
@@ -19,8 +17,6 @@ interface HomeProps {
 }
 
 const Home: NextPage<HomeProps> = ({ name, abouts, socialLinks, posts }) => {
-  const [activeModal, setActiveModal] = useState<number | null>(null);
-
   return (
     <div className="mx-auto">
       <Header name={name} socialLink={socialLinks[0]} />
@@ -39,13 +35,7 @@ const Home: NextPage<HomeProps> = ({ name, abouts, socialLinks, posts }) => {
           ))}
         </div>
 
-        <PostGrid posts={posts} setActiveModal={setActiveModal} />
-
-        <PostModals
-          posts={posts}
-          activeModal={activeModal}
-          setActiveModal={setActiveModal}
-        />
+        <PostGrid posts={posts} />
       </motion.div>
 
       <Footer name={name} socialLinks={socialLinks} />

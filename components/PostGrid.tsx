@@ -1,22 +1,22 @@
 // components/PostGrid.tsx
 import { Post } from "@/types/post";
 import Image from "next/image";
+import Link from "next/link";
 import { parseAlienCaption } from "@/lib/utils";
 
 interface PostGridProps {
   posts: Post[];
-  setActiveModal: (index: number | null) => void;
 }
 
-const PostGrid: React.FC<PostGridProps> = ({ posts, setActiveModal }) => {
+const PostGrid: React.FC<PostGridProps> = ({ posts }) => {
   return (
     <div className="grid grid-cols-2 md:grid-cols-3 gap-5 md:gap-10 text-light-1 dark:text-light-1">
-      {posts.map((post, index) => {
+      {posts.map((post) => {
         const caption = parseAlienCaption(post.title);
         return (
-          <a
-            key={index}
-            onClick={() => setActiveModal(index)}
+          <Link
+            key={post.id}
+            href={`/posts/${post.id}`}
             className="group relative cursor-pointer"
           >
             <Image
@@ -42,7 +42,7 @@ const PostGrid: React.FC<PostGridProps> = ({ posts, setActiveModal }) => {
             <div className="absolute inset-0 flex items-center justify-center text-white opacity-0 md:group-hover:opacity-100 transition duration-200">
               <span className="text-4xl">+</span>
             </div>
-          </a>
+          </Link>
         );
       })}
     </div>
