@@ -17,7 +17,7 @@ const Contact: NextPage<ContactProps> = ({ basics }) => {
     basics[0];
   return (
     <div className="mx-auto">
-      <Header name={name} socialLink={socialLinks[0]} />
+      <Header socialLink={socialLinks[0]} />
 
       <motion.div
         initial={{ opacity: 0 }}

@@ -11,12 +11,11 @@ import Footer from "@/components/Footer";
 
 interface AboutProps {
   name: string;
-  abouts: string[];
   socialLinks: SocialLink[];
   posts: Post[];
 }
 
-const About: NextPage<AboutProps> = ({ name, abouts, socialLinks, posts }) => {
+const About: NextPage<AboutProps> = ({ name, socialLinks, posts }) => {
   return (
     <div className="mx-auto">
       <Header socialLink={socialLinks[0]} />
@@ -53,7 +52,6 @@ export const getStaticProps: GetStaticProps<AboutProps> = async () => {
   return {
     props: {
       name: basics.name,
-      abouts: basics.abouts,
       socialLinks: basics.socialLinks,
       posts: JSON.parse(JSON.stringify(posts)),
     },
