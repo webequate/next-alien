@@ -1,7 +1,6 @@
 // pages/index.tsx
 import { GetStaticProps, NextPage } from "next";
 import { motion } from "framer-motion";
-import { connectToDatabase } from "@/lib/mongodb";
 import { Basics, SocialLink } from "@/types/basics";
 import { Post } from "@/types/post";
 import Header from "@/components/Header";
@@ -19,7 +18,7 @@ interface HomeProps {
 const Home: NextPage<HomeProps> = ({ name, abouts, socialLinks, posts }) => {
   return (
     <div className="mx-auto">
-      <Header name={name} socialLink={socialLinks[0]} />
+      <Header socialLink={socialLinks[0]} />
 
       <motion.div
         initial={{ opacity: 0 }}
@@ -35,7 +34,7 @@ const Home: NextPage<HomeProps> = ({ name, abouts, socialLinks, posts }) => {
           ))}
         </div>
 
-        <PostGrid posts={posts} />
+        <PostGrid posts={posts} path="posts" />
       </motion.div>
 
       <Footer name={name} socialLinks={socialLinks} />
@@ -44,23 +43,22 @@ const Home: NextPage<HomeProps> = ({ name, abouts, socialLinks, posts }) => {
 };
 
 export const getStaticProps: GetStaticProps<HomeProps> = async () => {
-  const db = await connectToDatabase(process.env.MONGODB_URI!);
+  const postsRes = await fetch(
+    `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/posts`
+  );
+  const posts: Post[] = await postsRes.json();
 
-  const postsCollection = db.collection<Post>("posts");
-  const posts: Post[] = await postsCollection
-    .find()
-    .sort({ creation_timestamp: -1 })
-    .toArray();
-
-  const basicsCollection = db.collection<Basics>("basics");
-  const basics: Basics[] = await basicsCollection.find().toArray();
+  const basicsRes = await fetch(
+    `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/basics`
+  );
+  const basics: Basics = await basicsRes.json();
 
   return {
     props: {
+      name: basics.name,
+      abouts: basics.abouts,
+      socialLinks: basics.socialLinks,
       posts: JSON.parse(JSON.stringify(posts)),
-      name: basics[0].name,
-      abouts: basics[0].abouts,
-      socialLinks: basics[0].socialLinks,
     },
     revalidate: 60,
   };

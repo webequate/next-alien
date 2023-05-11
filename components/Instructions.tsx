@@ -3,12 +3,12 @@ import { SocialLink } from "@/types/basics";
 import Link from "next/link";
 
 interface InstructionsProps {
-  socialLinks: SocialLink[];
+  socialLink: SocialLink;
 }
 
-const Instructions: React.FC<InstructionsProps> = ({ socialLinks }) => {
-  const instagramUrl = socialLinks[0].url;
-  const instagramHandle = socialLinks[0].handle;
+const Instructions: React.FC<InstructionsProps> = ({ socialLink }) => {
+  const instagramUrl = socialLink.url;
+  const instagramHandle = socialLink.handle;
 
   return (
     <div className="mx-auto text-center mb-10">

@@ -7,11 +7,16 @@ const fetchBasics = async (req: NextApiRequest, res: NextApiResponse) => {
     const client = await clientPromise;
     const db = client.db("allensaliens");
 
-    const data = await db.collection("basics").find({}).toArray();
+    const data = await db.collection("basics").findOne({});
 
-    res.json(data);
+    if (data) {
+      res.json(data);
+    } else {
+      res.status(404).json({ message: "Basics not found." });
+    }
   } catch (e) {
     console.error(e);
+    res.status(500).json({ message: "Internal server error." });
   }
 };
 

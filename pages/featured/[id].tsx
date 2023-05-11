@@ -1,4 +1,4 @@
-// pages/posts/[id].tsx
+// pages/featured/[id].tsx
 import { GetStaticProps, GetStaticPaths, NextPage } from "next";
 import { motion } from "framer-motion";
 import { Post } from "@/types/post";
@@ -67,13 +67,15 @@ const Post: NextPage<PostProps> = ({ name, socialLinks, posts, post }) => {
 export const getStaticPaths: GetStaticPaths = async () => {
   try {
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/posts`
+      `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/posts?featured=true`
     );
     const posts: Post[] = await res.json();
 
     const paths = posts.map((post) => ({
       params: { id: post.id.toString() },
     }));
+
+    console.log("paths:", paths);
 
     return { paths, fallback: true };
   } catch (error) {
@@ -89,12 +91,14 @@ export const getStaticProps: GetStaticProps<PostProps> = async ({ params }) => {
     }
 
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/posts`
+      `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/posts?featured=true`
     );
     const posts: Post[] = await res.json();
     const post: Post | undefined = posts.find(
-      (p) => p.id === Number(params.id)
+      (p) => p.id === Number(params.id) && p.featured === true
     );
+
+    console.log("posts:", posts);
 
     if (!post) {
       return { notFound: true };

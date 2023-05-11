@@ -9,11 +9,10 @@ import ThemeSwitcher from "@/components/ThemeSwitcher";
 import Hamburger from "@/components/Hamburger";
 
 interface HeaderProps {
-  name: string;
   socialLink: SocialLink;
 }
 
-const Header: React.FC<HeaderProps> = ({ name, socialLink }) => {
+const Header: React.FC<HeaderProps> = ({ socialLink }) => {
   const [showMenu, setShowMenu] = useState(false);
   const router = useRouter();
   const route = router.pathname;

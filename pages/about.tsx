@@ -1,16 +1,13 @@
 // pages/about.tsx
 import { GetStaticProps, NextPage } from "next";
 import { motion } from "framer-motion";
-import { connectToDatabase } from "@/lib/mongodb";
 import { Basics, SocialLink } from "@/types/basics";
 import { Post } from "@/types/post";
 import Header from "@/components/Header";
 import BusinessCard from "@/components/BusinessCard";
 import Instructions from "@/components/Instructions";
 import PostGrid from "@/components/PostGrid";
-import PostModals from "@/components/PostModals";
 import Footer from "@/components/Footer";
-import { useState } from "react";
 
 interface AboutProps {
   name: string;
@@ -19,12 +16,10 @@ interface AboutProps {
   posts: Post[];
 }
 
-const About: NextPage<AboutProps> = ({ name, socialLinks, posts }) => {
-  const [activeModal, setActiveModal] = useState<number | null>(null);
-
+const About: NextPage<AboutProps> = ({ name, abouts, socialLinks, posts }) => {
   return (
     <div className="mx-auto">
-      <Header name={name} socialLink={socialLinks[0]} />
+      <Header socialLink={socialLinks[0]} />
 
       <motion.div
         initial={{ opacity: 0 }}
@@ -34,15 +29,9 @@ const About: NextPage<AboutProps> = ({ name, socialLinks, posts }) => {
       >
         <BusinessCard />
 
-        <Instructions socialLinks={socialLinks} />
+        <Instructions socialLink={socialLinks[0]} />
 
-        <PostGrid posts={posts} setActiveModal={setActiveModal} />
-
-        <PostModals
-          posts={posts}
-          activeModal={activeModal}
-          setActiveModal={setActiveModal}
-        />
+        <PostGrid posts={posts} path="featured" />
       </motion.div>
 
       <Footer name={name} socialLinks={socialLinks} />
@@ -51,23 +40,22 @@ const About: NextPage<AboutProps> = ({ name, socialLinks, posts }) => {
 };
 
 export const getStaticProps: GetStaticProps<AboutProps> = async () => {
-  const db = await connectToDatabase(process.env.MONGODB_URI!);
+  const postsRes = await fetch(
+    `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/posts?featured=true`
+  );
+  const posts: Post[] = await postsRes.json();
 
-  const postsCollection = db.collection<Post>("posts");
-  const posts: Post[] = await postsCollection
-    .find({ featured: true })
-    .sort({ order: 1 })
-    .toArray();
-
-  const basicsCollection = db.collection<Basics>("basics");
-  const basics: Basics[] = await basicsCollection.find().toArray();
+  const basicsRes = await fetch(
+    `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/basics`
+  );
+  const basics: Basics = await basicsRes.json();
 
   return {
     props: {
+      name: basics.name,
+      abouts: basics.abouts,
+      socialLinks: basics.socialLinks,
       posts: JSON.parse(JSON.stringify(posts)),
-      name: basics[0].name,
-      abouts: basics[0].abouts,
-      socialLinks: basics[0].socialLinks,
     },
     revalidate: 60,
   };
