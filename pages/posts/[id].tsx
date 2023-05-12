@@ -41,8 +41,8 @@ const Post = ({ name, socialLinks, post, prevPost, nextPost }: PostProps) => {
           <Image
             src={`/${Array.isArray(post.uri) ? post.uri[0] : post.uri}`}
             alt={caption.title}
-            width={800}
-            height={800}
+            width={600}
+            height={600}
             className="mx-auto ring-1 ring-dark-3 dark:ring-light-3 mb-4"
           />
           <PostFooter additional={caption.additional} />
