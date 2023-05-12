@@ -1,38 +1,27 @@
 // pages/featured/[id].tsx
-import { GetStaticProps, GetStaticPaths, NextPage } from "next";
+import clientPromise from "@/lib/mongodb";
+import { GetStaticProps, GetStaticPaths } from "next";
 import { motion } from "framer-motion";
 import { Post } from "@/types/post";
-import { Basics, SocialLink } from "@/types/basics";
+import { SocialLink } from "@/types/basics";
+import basics from "@/data/basics.json";
 import Header from "@/components/Header";
 import PostHeader from "@/components/PostHeader";
 import Image from "next/image";
 import PostFooter from "@/components/PostFooter";
 import Footer from "@/components/Footer";
-import { useRouter } from "next/router";
 import { parseAlienCaption } from "@/lib/utils";
 
 interface PostProps {
   name: string;
   socialLinks: SocialLink[];
-  posts: Post[];
   post: Post;
+  prevPost: Post | null;
+  nextPost: Post | null;
 }
 
-const Post: NextPage<PostProps> = ({ name, socialLinks, posts, post }) => {
-  const router = useRouter();
-  const { id } = router.query;
-
-  if (router.isFallback) {
-    return <div>Loading...</div>;
-  }
-
-  const currentIndex = posts.findIndex((p) => p.id.toString() === id);
-  const prevPost = currentIndex > 0 ? posts[currentIndex - 1] : null;
-  const nextPost =
-    currentIndex < posts.length - 1 ? posts[currentIndex + 1] : null;
-
+const Post = ({ name, socialLinks, post, prevPost, nextPost }: PostProps) => {
   const caption = parseAlienCaption(post.title);
-
   return (
     <div className="mx-auto">
       <Header socialLink={socialLinks[0]} />
@@ -47,6 +36,7 @@ const Post: NextPage<PostProps> = ({ name, socialLinks, posts, post }) => {
             title={caption.title}
             prevId={prevPost?.id}
             nextId={nextPost?.id}
+            path="featured"
           />
           <Image
             src={`/${Array.isArray(post.uri) ? post.uri[0] : post.uri}`}
@@ -65,63 +55,55 @@ const Post: NextPage<PostProps> = ({ name, socialLinks, posts, post }) => {
 };
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  try {
-    const res = await fetch(
-      `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/posts?featured=true`
-    );
-    const posts: Post[] = await res.json();
+  const client = await clientPromise;
+  const db = client.db("allensaliens");
 
-    const paths = posts.map((post) => ({
-      params: { id: post.id.toString() },
-    }));
+  const postsCollection = db.collection<Post>("posts");
+  const posts: Post[] = await postsCollection
+    .find({ featured: true })
+    .sort({ order: 1 })
+    .toArray();
 
-    console.log("paths:", paths);
+  const paths = posts.map((post) => ({
+    params: { id: post.id.toString() },
+  }));
 
-    return { paths, fallback: true };
-  } catch (error) {
-    console.error("Error in getStaticPaths:", error);
-    throw error;
-  }
+  return { paths, fallback: false };
 };
 
 export const getStaticProps: GetStaticProps<PostProps> = async ({ params }) => {
-  try {
-    if (!params) {
-      return { notFound: true };
-    }
-
-    const res = await fetch(
-      `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/posts?featured=true`
-    );
-    const posts: Post[] = await res.json();
-    const post: Post | undefined = posts.find(
-      (p) => p.id === Number(params.id) && p.featured === true
-    );
-
-    console.log("posts:", posts);
-
-    if (!post) {
-      return { notFound: true };
-    }
-
-    const resBasics = await fetch(
-      `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/basics`
-    );
-    const basics: Basics = await resBasics.json();
-
-    return {
-      props: {
-        name: basics.name,
-        socialLinks: basics.socialLinks,
-        posts,
-        post,
-      },
-      revalidate: 60,
-    };
-  } catch (error) {
-    console.error("Error in getStaticProps:", error);
-    throw error;
+  if (!params) {
+    return { notFound: true };
   }
+
+  const client = await clientPromise;
+  const db = client.db("allensaliens");
+
+  const postsCollection = db.collection<Post>("posts");
+  const posts: Post[] = await postsCollection
+    .find({ featured: true })
+    .sort({ order: 1 })
+    .toArray();
+
+  const postIndex = posts.findIndex((p) => p.id === Number(params.id));
+  const post = posts[postIndex];
+  const prevPost = postIndex > 0 ? posts[postIndex - 1] : null;
+  const nextPost = postIndex < posts.length - 1 ? posts[postIndex + 1] : null;
+
+  if (!post) {
+    return { notFound: true };
+  }
+
+  return {
+    props: {
+      name: basics.name,
+      socialLinks: basics.socialLinks,
+      post: JSON.parse(JSON.stringify(post)),
+      prevPost: prevPost ? JSON.parse(JSON.stringify(prevPost)) : null,
+      nextPost: nextPost ? JSON.parse(JSON.stringify(nextPost)) : null,
+    },
+    revalidate: 60,
+  };
 };
 
 export default Post;

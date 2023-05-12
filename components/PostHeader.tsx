@@ -6,13 +6,19 @@ interface PostHeaderProps {
   title: string;
   prevId?: number;
   nextId?: number;
+  path: string;
 }
 
-const PostHeader: React.FC<PostHeaderProps> = ({ title, prevId, nextId }) => {
+const PostHeader: React.FC<PostHeaderProps> = ({
+  title,
+  prevId,
+  nextId,
+  path,
+}) => {
   return (
     <div className="flex justify-between text-xl sm:text-2xl md:text-3xl">
       {prevId ? (
-        <Link href={`/posts/${prevId}`}>
+        <Link href={`/${path}/${prevId}`}>
           <FaArrowLeft className="hover:text-accent-dark dark:hover:text-accent-light" />
         </Link>
       ) : (
@@ -24,7 +30,7 @@ const PostHeader: React.FC<PostHeaderProps> = ({ title, prevId, nextId }) => {
         {title}
       </h2>
       {nextId ? (
-        <Link href={`/posts/${nextId}`}>
+        <Link href={`/${path}/${nextId}`}>
           <FaArrowRight className="hover:text-accent-dark dark:hover:text-accent-light" />
         </Link>
       ) : (

@@ -1,20 +1,30 @@
 // pages/contact.tsx
 import { GetStaticProps, NextPage } from "next";
 import { motion } from "framer-motion";
-import { connectToDatabase } from "@/lib/mongodb";
-import { Basics } from "@/types/basics";
+import { SocialLink } from "@/types/basics";
+import basics from "@/data/basics.json";
 import Header from "@/components/Header";
 import ContactForm from "@/components/ContactForm";
 import ContactDetails from "@/components/ContactDetails";
 import Footer from "@/components/Footer";
 
-type ContactProps = {
-  basics: Basics[];
+type ContactPageProps = {
+  name: string;
+  contactIntro: string;
+  location: string;
+  email: string;
+  website: string;
+  socialLinks: SocialLink[];
 };
 
-const Contact: NextPage<ContactProps> = ({ basics }) => {
-  const { name, contactIntro, location, email, website, socialLinks } =
-    basics[0];
+const ContactPage: NextPage<ContactPageProps> = ({
+  name,
+  contactIntro,
+  location,
+  email,
+  website,
+  socialLinks,
+}) => {
   return (
     <div className="mx-auto">
       <Header socialLink={socialLinks[0]} />
@@ -46,18 +56,18 @@ const Contact: NextPage<ContactProps> = ({ basics }) => {
   );
 };
 
-export const getStaticProps: GetStaticProps<ContactProps> = async () => {
-  const db = await connectToDatabase(process.env.MONGODB_URI!);
-
-  const basicsCollection = db.collection<Basics>("basics");
-  const basics: Basics[] = await basicsCollection.find().toArray();
-
+export const getStaticProps: GetStaticProps<ContactPageProps> = async () => {
   return {
     props: {
-      basics: JSON.parse(JSON.stringify(basics)),
+      name: basics.name,
+      contactIntro: basics.contactIntro,
+      location: basics.location,
+      email: basics.email,
+      website: basics.website,
+      socialLinks: basics.socialLinks,
     },
     revalidate: 60,
   };
 };
 
-export default Contact;
+export default ContactPage;

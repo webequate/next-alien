@@ -1,21 +1,23 @@
 // pages/about.tsx
+import clientPromise from "@/lib/mongodb";
 import { GetStaticProps, NextPage } from "next";
 import { motion } from "framer-motion";
-import { Basics, SocialLink } from "@/types/basics";
 import { Post } from "@/types/post";
+import { SocialLink } from "@/types/basics";
+import basics from "@/data/basics.json";
 import Header from "@/components/Header";
 import BusinessCard from "@/components/BusinessCard";
 import Instructions from "@/components/Instructions";
 import PostGrid from "@/components/PostGrid";
 import Footer from "@/components/Footer";
 
-interface AboutProps {
+interface AboutPageProps {
   name: string;
   socialLinks: SocialLink[];
   posts: Post[];
 }
 
-const About: NextPage<AboutProps> = ({ name, socialLinks, posts }) => {
+const AboutPage: NextPage<AboutPageProps> = ({ name, socialLinks, posts }) => {
   return (
     <div className="mx-auto">
       <Header socialLink={socialLinks[0]} />
@@ -38,16 +40,15 @@ const About: NextPage<AboutProps> = ({ name, socialLinks, posts }) => {
   );
 };
 
-export const getStaticProps: GetStaticProps<AboutProps> = async () => {
-  const postsRes = await fetch(
-    `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/posts?featured=true`
-  );
-  const posts: Post[] = await postsRes.json();
+export const getStaticProps: GetStaticProps<AboutPageProps> = async () => {
+  const client = await clientPromise;
+  const db = client.db("allensaliens");
 
-  const basicsRes = await fetch(
-    `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/basics`
-  );
-  const basics: Basics = await basicsRes.json();
+  const postsCollection = db.collection<Post>("posts");
+  const posts: Post[] = await postsCollection
+    .find({ featured: true })
+    .sort({ order: 1 })
+    .toArray();
 
   return {
     props: {
@@ -59,4 +60,4 @@ export const getStaticProps: GetStaticProps<AboutProps> = async () => {
   };
 };
 
-export default About;
+export default AboutPage;

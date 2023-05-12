@@ -60,7 +60,7 @@ a {
     @apply flex items-center text-sm md:text-lg font-semibold rounded-full text-dark-2 dark:text-light-2 bg-light-1 dark:bg-dark-1 ring-1 ring-dark-3 dark:ring-light-3 px-3 mx-6;
   }
   .nav-primary a {
-    @apply hover:text-accent-dark dark:hover:text-accent-light mx-2 md:mx-4 py-1 md:py-2 duration-300;
+    @apply hover:text-accent-dark dark:hover:text-accent-light mx-2 md:mx-4 py-1 md:py-2 transition duration-300;
   }
   .nav-primary a.active {
     @apply text-accent-dark dark:text-accent-light;
@@ -70,62 +70,24 @@ a {
     @apply flex text-sm font-semibold text-dark-2 dark:text-light-2 rounded-full px-3 mx-6 bg-light-1 dark:bg-dark-1 ring-1 ring-dark-3 dark:ring-light-3;
   }
   .nav-secondary a {
-    @apply hover:text-accent-dark dark:hover:text-accent-light sm:mx-4 sm:py-2 duration-300;
+    @apply hover:text-accent-dark dark:hover:text-accent-light sm:mx-4 sm:py-2 transition duration-300;
   }
   /* Mobile navigation */
   .nav-mobile {
-    @apply block text-lg text-left m-0 mt-3 py-3 justify-between items-center;
+    @apply block overflow-hidden max-h-0 text-lg text-left m-0 justify-between items-center transition-all duration-500 ease-in-out;
+  }
+  .nav-mobile.show {
+    @apply max-h-[300px];
   }
   .nav-mobile a {
-    @apply block text-dark-2 dark:text-light-2 hover:text-accent-light dark:hover:text-accent-light py-2 border-b-2 md:border-b-0 border-dark-3 dark:border-light-3 duration-300;
+    @apply block text-dark-2 dark:text-light-2 hover:text-accent-light dark:hover:text-accent-light py-2 border-b-2 md:border-b-0 border-dark-3 dark:border-light-3;
   }
   .nav-mobile a.active {
     @apply text-accent-light dark:text-accent-light;
   }
 }
 
-.modal {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  opacity: 0;
-  visibility: hidden;
-  transition: all 0.3s;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.modal-open {
-  opacity: 1;
-  visibility: visible;
-}
-
-.modal:target {
-  opacity: 1;
-  visibility: visible;
-}
-
-.modal-content {
-  width: 90%;
-  max-width: 800px;
-  border-radius: 8px;
-  padding: 1rem;
-  position: relative;
-}
-
-.modal-close {
-  position: absolute;
-  top: 1rem;
-  right: 1rem;
-  font-size: 1.5rem;
-  color: black;
-  text-decoration: none;
-}
-
-.modal-close:hover {
-  color: red;
+/* Prevent layout from shifting when scrollbar appears */
+html {
+  scrollbar-gutter: stable both-edges;
 }

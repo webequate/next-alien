@@ -14,11 +14,15 @@ const fetchPosts = async (req: NextApiRequest, res: NextApiResponse) => {
 
     // Parse the query parameters
     const featured = req.query.featured === "true" ? true : false;
+    console.log("featured", featured);
     const limit = req.query.limit ? parseInt(req.query.limit as string) : 0;
+    console.log("limit", limit);
 
     // Update the find and sort options based on the query parameters
     const findOptions = featured ? { featured: true } : {};
+    console.log("findOptions", findOptions);
     const sortOptions: SortOptions = featured ? { order: 1 } : { id: -1 };
+    console.log("sortOptions", sortOptions);
 
     const data = await db
       .collection("posts")
