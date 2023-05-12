@@ -77,7 +77,7 @@ const Header: React.FC<HeaderProps> = ({ socialLink }) => {
         </div>
 
         {/* Navigation links - Small screen */}
-        <div className={showMenu ? "nav-mobile" : "hidden"}>
+        <div className={showMenu ? "nav-mobile show" : "nav-mobile"}>
           <Link
             href="/"
             aria-label="Home"
