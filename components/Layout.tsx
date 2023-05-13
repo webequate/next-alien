@@ -25,6 +25,20 @@ const Layout: React.FC<LayoutProps> = ({
         <title>{title}</title>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <meta
+          name="description"
+          content="Allen's Aliens in the wild. Photos submitted to me and photos I've taken of proud new owners."
+          key="desc"
+        />
+        <meta property="og:title" content="Allen's Aliens" />
+        <meta
+          property="og:description"
+          content="Allen's Aliens in the wild. Photos submitted to me and photos I've taken of proud new owners."
+        />
+        <meta
+          property="og:image"
+          content="https://www.allensaliens.com/images/allens-aliens.jpg"
+        />
         <link rel="icon" href="/alien.png" />
       </Head>
       <main className="min-h-screen bg-white dark:bg-neutral-900 border-x border-dark-3 dark:border-light-3 px-6 sm:px-8 lg:px-16">
