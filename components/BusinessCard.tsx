@@ -8,8 +8,9 @@ const BusinessCard: React.FC = () => {
         <Image
           src="/images/card-front.jpg"
           alt="Front of business card"
-          width={900}
-          height={500}
+          width={858}
+          height={492}
+          priority
           className="rounded-xl"
         />
       </div>
@@ -17,8 +18,9 @@ const BusinessCard: React.FC = () => {
         <Image
           src="/images/card-back.jpg"
           alt="Back of business card"
-          width={900}
-          height={500}
+          width={858}
+          height={492}
+          priority
           className="rounded-xl"
         />
       </div>

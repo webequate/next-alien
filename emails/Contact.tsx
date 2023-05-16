@@ -31,7 +31,7 @@ const Contact: Template<ContactProps> = ({ name, email, subject, message }) => {
             maxWidth={450}
             paddingBottom={32}
           >
-            Your contact form was submitted!
+            Your AllensAliens.com contact form was submitted!
           </Heading>
           <Text color={colors.lightSecondary} paddingBottom={4}>
             Name:
