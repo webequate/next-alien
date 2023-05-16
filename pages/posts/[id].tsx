@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import { Post } from "@/types/post";
 import { SocialLink } from "@/types/basics";
 import basics from "@/data/basics.json";
+import Head from "next/head";
 import Header from "@/components/Header";
 import PostHeader from "@/components/PostHeader";
 import Image from "next/image";
@@ -24,6 +25,12 @@ const Post = ({ name, socialLinks, post, prevPost, nextPost }: PostProps) => {
   const caption = parseAlienCaption(post.title);
   return (
     <div className="mx-auto">
+      <Head>
+        <meta
+          property="og:image"
+          content={`/${Array.isArray(post.uri) ? post.uri[0] : post.uri}`}
+        />
+      </Head>
       <Header socialLink={socialLinks[0]} />
 
       <motion.div
