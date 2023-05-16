@@ -39,6 +39,8 @@ const Layout: React.FC<LayoutProps> = ({
           property="og:image"
           content="https://www.allensaliens.com/images/alien-og.jpg"
         />
+        <meta property="og:url" content="https://www.allensaliens.com" />
+        <meta property="og:type" content="website" />
         <link rel="icon" href="/alien.png" />
       </Head>
       <main className="min-h-screen bg-white dark:bg-neutral-900 border-x border-dark-3 dark:border-light-3 px-6 sm:px-8 lg:px-16">
