@@ -18,7 +18,11 @@ const PostHeader: React.FC<PostHeaderProps> = ({
   return (
     <div className="flex justify-between text-xl sm:text-2xl md:text-3xl">
       {prevId ? (
-        <Link href={`/${path}/${prevId}`}>
+        <Link
+          href={`/${path}/${prevId}`}
+          title="Previous Post"
+          aria-label="Previous Post"
+        >
           <FaArrowLeft className="hover:text-accent-dark dark:hover:text-accent-light" />
         </Link>
       ) : (
@@ -30,7 +34,11 @@ const PostHeader: React.FC<PostHeaderProps> = ({
         {title}
       </h2>
       {nextId ? (
-        <Link href={`/${path}/${nextId}`}>
+        <Link
+          href={`/${path}/${nextId}`}
+          title="Next Post"
+          aria-label="Next Post"
+        >
           <FaArrowRight className="hover:text-accent-dark dark:hover:text-accent-light" />
         </Link>
       ) : (
