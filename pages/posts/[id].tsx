@@ -50,6 +50,7 @@ const Post = ({ name, socialLinks, post, prevPost, nextPost }: PostProps) => {
             alt={caption.title}
             width={600}
             height={600}
+            priority
             className="mx-auto ring-1 ring-dark-3 dark:ring-light-3 mb-4"
           />
           <PostFooter additional={caption.additional} />
