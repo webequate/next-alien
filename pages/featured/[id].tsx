@@ -11,6 +11,8 @@ import Image from "next/image";
 import PostFooter from "@/components/PostFooter";
 import Footer from "@/components/Footer";
 import { parseAlienCaption } from "@/lib/utils";
+import { useRouter } from "next/router";
+import { useSwipeable } from "react-swipeable";
 
 interface PostProps {
   name: string;
@@ -22,6 +24,20 @@ interface PostProps {
 
 const Post = ({ name, socialLinks, post, prevPost, nextPost }: PostProps) => {
   const caption = parseAlienCaption(post.title);
+
+  const router = useRouter();
+  const handlers = useSwipeable({
+    onSwipedLeft: () => {
+      if (!nextPost) return;
+      router.push(`/featured/${nextPost?.id}`);
+    },
+    onSwipedRight: () => {
+      if (!prevPost) return;
+      router.push(`/featured/${prevPost?.id}`);
+    },
+    trackMouse: true,
+  });
+
   return (
     <div className="mx-auto">
       <Header socialLink={socialLinks[0]} />
@@ -31,7 +47,10 @@ const Post = ({ name, socialLinks, post, prevPost, nextPost }: PostProps) => {
         animate={{ opacity: 1 }}
         transition={{ ease: "easeInOut", duration: 0.9, delay: 0.2 }}
       >
-        <div className="justify-center text-dark-1 dark:text-light-1">
+        <div
+          {...handlers}
+          className="justify-center text-dark-1 dark:text-light-1"
+        >
           <PostHeader
             title={caption.title}
             prevId={prevPost?.id}
