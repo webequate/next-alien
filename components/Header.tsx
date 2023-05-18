@@ -28,12 +28,12 @@ const Header: React.FC<HeaderProps> = ({ socialLink }) => {
         href="/"
         title="Home"
         aria-label="Home"
-        className="text-dark-1 dark:text-light-1 hover:text-accent-light dark:hover:text-accent-light my-4 duration-300"
+        className="text-dark-1 dark:text-light-1 hover:text-accent-light dark:hover:text-accent-light mt-4 mb-2 sm:mb-2 transition duration-300"
       >
         <AllensAliens />
       </Link>
 
-      <div className="container mx-auto px-2 py-3 mb-6 md:mb-10">
+      <div className="container mx-auto px-0 py-3 mb-2 md:mb-10">
         <div className="flex justify-center items-center">
           {/* Social link button */}
           <div className="flex mr-auto">

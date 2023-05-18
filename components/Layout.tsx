@@ -43,7 +43,7 @@ const Layout: React.FC<LayoutProps> = ({
         <meta property="og:type" content="website" />
         <link rel="icon" href="/alien.png" />
       </Head>
-      <main className="min-h-screen bg-white dark:bg-neutral-900 border-x border-dark-3 dark:border-light-3 px-6 sm:px-8 lg:px-16">
+      <main className="min-h-screen bg-white dark:bg-neutral-900 sm:border-x border-dark-3 dark:border-light-3 px-6 sm:px-8 lg:px-16">
         <div className="bg-white dark:bg-neutral-900">{children}</div>
       </main>
     </>
