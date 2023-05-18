@@ -75,7 +75,7 @@ a {
   }
   /* Mobile navigation */
   .nav-mobile {
-    @apply block overflow-hidden max-h-0 text-lg text-left m-0 justify-between items-center transition-all duration-500 ease-in-out;
+    @apply block overflow-hidden max-h-0 text-lg text-center m-0 justify-between items-center transition-all duration-500 ease-in-out;
   }
   .nav-mobile.show {
     @apply max-h-[300px];
