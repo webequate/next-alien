@@ -23,7 +23,7 @@ const PostHeader: React.FC<PostHeaderProps> = ({
           title="Previous Post"
           aria-label="Previous Post"
         >
-          <FaArrowLeft className="hover:text-accent-dark dark:hover:text-accent-light" />
+          <FaArrowLeft className="sm:hover:text-accent-dark sm:dark:hover:text-accent-light" />
         </Link>
       ) : (
         <div className="invisible">
@@ -39,7 +39,7 @@ const PostHeader: React.FC<PostHeaderProps> = ({
           title="Next Post"
           aria-label="Next Post"
         >
-          <FaArrowRight className="hover:text-accent-dark dark:hover:text-accent-light" />
+          <FaArrowRight className="sm:hover:text-accent-dark sm:dark:hover:text-accent-light" />
         </Link>
       ) : (
         <div className="invisible">

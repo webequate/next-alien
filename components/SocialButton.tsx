@@ -40,7 +40,7 @@ const SocialButton: React.FC<SocialButtonProps> = ({ name, url }) => {
       target="_blank"
       title={name}
       aria-label={name}
-      className={`font-general-regular text-3xl text-dark-2 dark:text-light-2 hover:text-light-1 dark:hover:text-light-1 bg-light-1 dark:bg-dark-1 hover:bg-accent-light dark:hover:bg-accent-light ring-1 ring-dark-3 dark:ring-light-3 cursor-pointer rounded-lg p-2 duration-300`}
+      className={`font-general-regular text-3xl text-dark-2 dark:text-light-2 sm:hover:text-light-1 sm:dark:hover:text-light-1 bg-light-1 dark:bg-dark-1 sm:hover:bg-accent-light sm:dark:hover:bg-accent-light ring-1 ring-dark-3 dark:ring-light-3 cursor-pointer rounded-lg p-2 duration-300`}
     >
       {iconFromName(name)}
     </Link>

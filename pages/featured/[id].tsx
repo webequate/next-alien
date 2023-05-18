@@ -13,6 +13,7 @@ import Footer from "@/components/Footer";
 import { parseAlienCaption } from "@/lib/utils";
 import { useRouter } from "next/router";
 import { useSwipeable } from "react-swipeable";
+import { useEffect, useState } from "react";
 
 interface PostProps {
   name: string;
@@ -24,18 +25,37 @@ interface PostProps {
 
 const Post = ({ name, socialLinks, post, prevPost, nextPost }: PostProps) => {
   const caption = parseAlienCaption(post.title);
-
   const router = useRouter();
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 640);
+    };
+
+    window.addEventListener("resize", checkMobile);
+    checkMobile();
+
+    // Cleanup
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
+
   const handlers = useSwipeable({
     onSwipedLeft: () => {
       if (!nextPost) return;
-      router.push(`/featured/${nextPost?.id}`);
+      if (isMobile) {
+        router.push(`/featured/${nextPost?.id}`);
+      }
     },
     onSwipedRight: () => {
       if (!prevPost) return;
-      router.push(`/featured/${prevPost?.id}`);
+      if (isMobile) {
+        router.push(`/featured/${prevPost?.id}`);
+      }
     },
-    trackMouse: true,
+    preventScrollOnSwipe: true,
+    trackTouch: true,
+    trackMouse: false,
   });
 
   return (
@@ -47,10 +67,7 @@ const Post = ({ name, socialLinks, post, prevPost, nextPost }: PostProps) => {
         animate={{ opacity: 1 }}
         transition={{ ease: "easeInOut", duration: 0.9, delay: 0.2 }}
       >
-        <div
-          {...handlers}
-          className="justify-center text-dark-1 dark:text-light-1"
-        >
+        <div className="justify-center text-dark-1 dark:text-light-1">
           <PostHeader
             title={caption.title}
             prevId={prevPost?.id}
@@ -58,6 +75,7 @@ const Post = ({ name, socialLinks, post, prevPost, nextPost }: PostProps) => {
             path="featured"
           />
           <Image
+            {...handlers}
             src={`/${Array.isArray(post.uri) ? post.uri[0] : post.uri}`}
             alt={caption.title}
             width={600}
