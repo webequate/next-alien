@@ -31,7 +31,7 @@ const PostHeader: React.FC<PostHeaderProps> = ({
           <FaArrowLeft />
         </div>
       )}
-      <h2 className="bruno text-center mb-2">{title}</h2>
+      <h2 className="text-center mb-2">{title}</h2>
       {nextId ? (
         <Link
           href={`/${path}/${nextId}`}
