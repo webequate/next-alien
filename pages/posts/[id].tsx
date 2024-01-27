@@ -1,10 +1,10 @@
 // pages/posts/[id].tsx
-import clientPromise from "@/lib/mongodb";
 import { GetStaticProps, GetStaticPaths } from "next";
 import { motion } from "framer-motion";
 import { Post } from "@/types/post";
 import { SocialLink } from "@/types/basics";
 import basics from "@/data/basics.json";
+import posts from "@/data/posts.json";
 import Head from "next/head";
 import Header from "@/components/Header";
 import PostHeader from "@/components/PostHeader";
@@ -100,16 +100,9 @@ const Post = ({ name, socialLinks, post, prevPost, nextPost }: PostProps) => {
 };
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const client = await clientPromise;
-  const db = client.db("allensaliens");
+  let sortedPosts: Post[] = posts.sort((a, b) => b.id - a.id);
 
-  const postsCollection = db.collection<Post>("posts");
-  const posts: Post[] = await postsCollection
-    .find({})
-    .sort({ id: -1 })
-    .toArray();
-
-  const paths = posts.map((post) => ({
+  const paths = sortedPosts.map((post) => ({
     params: { id: post.id.toString() },
   }));
 
@@ -121,14 +114,7 @@ export const getStaticProps: GetStaticProps<PostProps> = async ({ params }) => {
     return { notFound: true };
   }
 
-  const client = await clientPromise;
-  const db = client.db("allensaliens");
-
-  const postsCollection = db.collection<Post>("posts");
-  const posts: Post[] = await postsCollection
-    .find({})
-    .sort({ id: -1 })
-    .toArray();
+  let sortedPosts: Post[] = posts.sort((a, b) => b.id - a.id);
 
   const postIndex = posts.findIndex((p) => p.id === Number(params.id));
   const post = posts[postIndex];

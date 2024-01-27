@@ -1,10 +1,10 @@
 // pages/featured/[id].tsx
-import clientPromise from "@/lib/mongodb";
 import { GetStaticProps, GetStaticPaths } from "next";
 import { motion } from "framer-motion";
 import { Post } from "@/types/post";
 import { SocialLink } from "@/types/basics";
 import basics from "@/data/basics.json";
+import posts from "@/data/posts.json";
 import Header from "@/components/Header";
 import PostHeader from "@/components/PostHeader";
 import Image from "next/image";
@@ -93,16 +93,9 @@ const Post = ({ name, socialLinks, post, prevPost, nextPost }: PostProps) => {
 };
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const client = await clientPromise;
-  const db = client.db("allensaliens");
+  let sortedPosts: Post[] = posts.sort((a, b) => b.id - a.id);
 
-  const postsCollection = db.collection<Post>("posts");
-  const posts: Post[] = await postsCollection
-    .find({ featured: true })
-    .sort({ order: 1 })
-    .toArray();
-
-  const paths = posts.map((post) => ({
+  const paths = sortedPosts.map((post) => ({
     params: { id: post.id.toString() },
   }));
 
@@ -114,19 +107,13 @@ export const getStaticProps: GetStaticProps<PostProps> = async ({ params }) => {
     return { notFound: true };
   }
 
-  const client = await clientPromise;
-  const db = client.db("allensaliens");
+  let sortedPosts: Post[] = posts.sort((a, b) => b.id - a.id);
 
-  const postsCollection = db.collection<Post>("posts");
-  const posts: Post[] = await postsCollection
-    .find({ featured: true })
-    .sort({ order: 1 })
-    .toArray();
-
-  const postIndex = posts.findIndex((p) => p.id === Number(params.id));
-  const post = posts[postIndex];
-  const prevPost = postIndex > 0 ? posts[postIndex - 1] : null;
-  const nextPost = postIndex < posts.length - 1 ? posts[postIndex + 1] : null;
+  const postIndex = sortedPosts.findIndex((p) => p.id === Number(params.id));
+  const post = sortedPosts[postIndex];
+  const prevPost = postIndex > 0 ? sortedPosts[postIndex - 1] : null;
+  const nextPost =
+    postIndex < sortedPosts.length - 1 ? sortedPosts[postIndex + 1] : null;
 
   if (!post) {
     return { notFound: true };

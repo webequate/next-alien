@@ -1,10 +1,10 @@
 // pages/index.tsx
-import clientPromise from "@/lib/mongodb";
 import { GetStaticProps, NextPage } from "next";
 import { motion } from "framer-motion";
 import { Post } from "@/types/post";
 import { SocialLink } from "@/types/basics";
 import basics from "@/data/basics.json";
+import posts from "@/data/posts.json";
 import Header from "@/components/Header";
 import BusinessCard from "@/components/BusinessCard";
 import PostGrid from "@/components/PostGrid";
@@ -50,21 +50,14 @@ const HomePage: NextPage<HomePageProps> = ({
 };
 
 export const getStaticProps: GetStaticProps<HomePageProps> = async () => {
-  const client = await clientPromise;
-  const db = client.db("allensaliens");
-
-  const postsCollection = db.collection<Post>("posts");
-  const posts: Post[] = await postsCollection
-    .find({})
-    .sort({ id: -1 })
-    .toArray();
+  let sortedPosts: Post[] = posts.sort((a, b) => b.id - a.id);
 
   return {
     props: {
       name: basics.name,
       abouts: basics.abouts,
       socialLinks: basics.socialLinks,
-      posts: JSON.parse(JSON.stringify(posts)),
+      posts: sortedPosts,
     },
     revalidate: 60,
   };

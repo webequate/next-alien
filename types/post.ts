@@ -1,8 +1,7 @@
 // types/post.ts
 export type Post = {
-  _id: string;
   id: number;
-  creation_timestamp: string;
+  creation_timestamp: number;
   uri: string | string[];
   title: string;
   featured?: boolean;
