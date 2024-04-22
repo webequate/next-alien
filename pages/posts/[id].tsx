@@ -1,7 +1,7 @@
 // pages/posts/[id].tsx
 import { GetStaticProps, GetStaticPaths } from "next";
 import { motion } from "framer-motion";
-import { Post } from "@/types/post";
+import type { Post } from "@/types/post";
 import { SocialLink } from "@/types/basics";
 import basics from "@/data/basics.json";
 import posts from "@/data/posts.json";

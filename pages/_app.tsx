@@ -20,8 +20,8 @@ function MyApp({ Component, pageProps }: AppProps) {
           </div>
         </AnimatePresence>
       </ThemeProvider>
-      <GoogleAnalytics gaId={process.env.GA_ID as string} />
-      <GoogleTagManager gtmId={process.env.GTM_ID as string} />
+      <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_ID as string} />
+      <GoogleTagManager gtmId={process.env.NEXT_PUBLIC_GTM_ID as string} />
     </>
   );
 }
