@@ -4,7 +4,8 @@ import Layout from "@/components/Layout";
 import UseScrollToTop from "../hooks/useScrollToTop";
 import { ThemeProvider } from "next-themes";
 import type { AppProps } from "next/app";
-import { GoogleTagManager, GoogleAnalytics } from "@next/third-parties/google";
+// import { GoogleAnalytics } from "@next/third-parties/google";
+import { GoogleTagManager } from "@next/third-parties/google";
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
@@ -20,7 +21,8 @@ function MyApp({ Component, pageProps }: AppProps) {
           </div>
         </AnimatePresence>
       </ThemeProvider>
-      <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_ID as string} />
+
+      {/* <GoogleAnalytics gaId={process.env.NEXT_PUBLIC_GA_ID as string} /> */}
       <GoogleTagManager gtmId={process.env.NEXT_PUBLIC_GTM_ID as string} />
     </>
   );
