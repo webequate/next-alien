@@ -1,11 +1,11 @@
 // pages/posts/[id].tsx
 import { GetStaticProps, GetStaticPaths } from "next";
+import Head from "next/head";
 import { motion } from "framer-motion";
 import type { Post } from "@/types/post";
 import { SocialLink } from "@/types/basics";
 import basics from "@/data/basics.json";
 import posts from "@/data/posts.json";
-import Head from "next/head";
 import Header from "@/components/Header";
 import PostHeader from "@/components/PostHeader";
 import Image from "next/image";
@@ -62,11 +62,16 @@ const Post = ({ name, socialLinks, post, prevPost, nextPost }: PostProps) => {
   return (
     <div className="mx-auto">
       <Head>
+        <title>{`${name} | ${caption.title}`}</title>
+        <meta name="description" content={`${caption.title}`} key="desc" />
+        <meta name="robots" content="index, follow" />
         <meta
           property="og:image"
           content={`/${Array.isArray(post.uri) ? post.uri[0] : post.uri}`}
+          key="ogimage"
         />
       </Head>
+
       <Header socialLink={socialLinks[0]} />
 
       <motion.div

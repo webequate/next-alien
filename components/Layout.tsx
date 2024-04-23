@@ -34,13 +34,19 @@ const Layout: React.FC<LayoutProps> = ({
         <meta
           property="og:description"
           content="Allen's Aliens in the wild. Photos submitted to me and photos I've taken of proud new owners."
+          key="ogdesc"
         />
         <meta
           property="og:image"
           content="https://www.allensaliens.com/images/alien-og.jpg"
+          key="ogimage"
         />
-        <meta property="og:url" content="https://www.allensaliens.com" />
-        <meta property="og:type" content="website" />
+        <meta
+          property="og:url"
+          content="https://www.allensaliens.com"
+          key="ogtype"
+        />
+        <meta property="og:type" content="website" key="ogtype" />
         <link rel="icon" href="/alien.png" />
       </Head>
       <main className="min-h-screen bg-white dark:bg-neutral-900 sm:border-x border-dark-3 dark:border-light-3 px-6 sm:px-8 lg:px-16">

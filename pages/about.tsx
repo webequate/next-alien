@@ -1,5 +1,6 @@
 // pages/about.tsx
 import { GetStaticProps, NextPage } from "next";
+import Head from "next/head";
 import { motion } from "framer-motion";
 import { Post } from "@/types/post";
 import { SocialLink } from "@/types/basics";
@@ -20,6 +21,16 @@ interface AboutPageProps {
 const AboutPage: NextPage<AboutPageProps> = ({ name, socialLinks, posts }) => {
   return (
     <div className="mx-auto">
+      <Head>
+        <title>{`${name} | About`}</title>
+        <meta
+          name="description"
+          content="Learn about Allen's Aliens."
+          key="desc"
+        />
+        <meta name="robots" content="index, follow" />
+      </Head>
+
       <Header socialLink={socialLinks[0]} />
 
       <motion.div
