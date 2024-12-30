@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 import type { Post } from "@/types/post";
 import { SocialLink } from "@/types/basics";
 import basics from "@/data/basics.json";
-import posts from "@/data/posts.json";
+import postsData from "@/data/posts.json";
 import Header from "@/components/Header";
 import PostHeader from "@/components/PostHeader";
 import Image from "next/image";
@@ -15,6 +15,7 @@ import { parseAlienCaption } from "@/lib/utils";
 import { useRouter } from "next/router";
 import { useSwipeable } from "react-swipeable";
 import { useEffect, useState } from "react";
+import { FaChevronLeft, FaChevronRight } from "react-icons/fa";
 
 interface PostProps {
   name: string;
@@ -28,6 +29,10 @@ const Post = ({ name, socialLinks, post, prevPost, nextPost }: PostProps) => {
   const caption = parseAlienCaption(post.title);
   const router = useRouter();
   const [isMobile, setIsMobile] = useState(false);
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+
+  const images = Array.isArray(post.uri) ? post.uri : [post.uri];
+  // console.log("images is ", post.uri);
 
   useEffect(() => {
     const checkMobile = () => {
@@ -37,20 +42,38 @@ const Post = ({ name, socialLinks, post, prevPost, nextPost }: PostProps) => {
     window.addEventListener("resize", checkMobile);
     checkMobile();
 
-    // Cleanup
     return () => window.removeEventListener("resize", checkMobile);
   }, []);
 
+  // Reset currentImageIndex to 0 when the post ID changes
+  useEffect(() => {
+    setCurrentImageIndex(0);
+  }, [router.query.id, post.uri]);
+
+  const handleNextImage = () => {
+    if (currentImageIndex < images.length - 1) {
+      setCurrentImageIndex((prevIndex) => prevIndex + 1);
+    }
+  };
+
+  const handlePrevImage = () => {
+    if (currentImageIndex > 0) {
+      setCurrentImageIndex((prevIndex) => prevIndex - 1);
+    }
+  };
+
   const handlers = useSwipeable({
     onSwipedLeft: () => {
-      if (!nextPost) return;
-      if (isMobile) {
+      if (currentImageIndex < images.length - 1) {
+        handleNextImage();
+      } else if (nextPost) {
         router.push(`/posts/${nextPost?.id}`);
       }
     },
     onSwipedRight: () => {
-      if (!prevPost) return;
-      if (isMobile) {
+      if (currentImageIndex > 0) {
+        handlePrevImage();
+      } else if (prevPost) {
         router.push(`/posts/${prevPost?.id}`);
       }
     },
@@ -67,7 +90,7 @@ const Post = ({ name, socialLinks, post, prevPost, nextPost }: PostProps) => {
         <meta name="robots" content="index, follow" />
         <meta
           property="og:image"
-          content={`/${Array.isArray(post.uri) ? post.uri[0] : post.uri}`}
+          content={`/${images[currentImageIndex]}`}
           key="ogimage"
         />
       </Head>
@@ -79,22 +102,49 @@ const Post = ({ name, socialLinks, post, prevPost, nextPost }: PostProps) => {
         animate={{ opacity: 1 }}
         transition={{ ease: "easeInOut", duration: 0.9, delay: 0.2 }}
       >
-        <div className="justify-center text-dark-1 dark:text-light-1">
+        <div className="relative justify-center text-dark-1 dark:text-light-1 pb-3">
           <PostHeader
             title={caption.title}
             prevId={prevPost?.id}
             nextId={nextPost?.id}
             path="posts"
           />
-          <Image
+          <div
             {...handlers}
-            src={`/${Array.isArray(post.uri) ? post.uri[0] : post.uri}`}
-            alt={caption.title}
-            width={600}
-            height={600}
-            priority
-            className="mx-auto ring-1 ring-dark-3 dark:ring-light-3 mb-2"
-          />
+            className="flex items-center justify-between mx-auto w-fit mt-2 pb-2"
+          >
+            {/* Left Navigation */}
+            {currentImageIndex > 0 ? (
+              <FaChevronLeft
+                onClick={handlePrevImage}
+                className="sm:hover:text-accent-dark sm:dark:hover:text-accent-light text-xl sm:text-2xl md:text-4xl cursor-pointer"
+                aria-label="Previous Image"
+              />
+            ) : (
+              <div className="w-6" /> /* Placeholder for alignment if no button */
+            )}
+
+            <Image
+              src={`/${images[currentImageIndex]}`}
+              alt={`${caption.title} - Image ${currentImageIndex + 1}`}
+              width={600}
+              height={600}
+              priority
+              className="ring-1 ring-dark-3 dark:ring-light-3 mb-2"
+            />
+
+            {/* Right Navigation */}
+            {currentImageIndex < images.length - 1 ? (
+              <FaChevronRight
+                onClick={handleNextImage}
+                className="sm:hover:text-accent-dark sm:dark:hover:text-accent-light text-xl sm:text-2xl md:text-4xl cursor-pointer"
+                aria-label="Next Image"
+              />
+            ) : (
+              <div className="w-6" /> /* Placeholder for alignment if no button */
+            )}
+          </div>
+
           <PostFooter additional={caption.additional} />
         </div>
       </motion.div>
@@ -105,9 +155,9 @@ const Post = ({ name, socialLinks, post, prevPost, nextPost }: PostProps) => {
 };
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  let sortedPosts: Post[] = posts.sort((a, b) => b.id - a.id);
+  let posts: Post[] = postsData.sort((a, b) => b.id - a.id);
 
-  const paths = sortedPosts.map((post) => ({
+  const paths = posts.map((post) => ({
     params: { id: post.id.toString() },
   }));
 
@@ -119,7 +169,7 @@ export const getStaticProps: GetStaticProps<PostProps> = async ({ params }) => {
     return { notFound: true };
   }
 
-  let sortedPosts: Post[] = posts.sort((a, b) => b.id - a.id);
+  let posts: Post[] = postsData.sort((a, b) => b.id - a.id);
 
   const postIndex = posts.findIndex((p) => p.id === Number(params.id));
   const post = posts[postIndex];
@@ -134,9 +184,9 @@ export const getStaticProps: GetStaticProps<PostProps> = async ({ params }) => {
     props: {
       name: basics.name,
       socialLinks: basics.socialLinks,
-      post: JSON.parse(JSON.stringify(post)),
-      prevPost: prevPost ? JSON.parse(JSON.stringify(prevPost)) : null,
-      nextPost: nextPost ? JSON.parse(JSON.stringify(nextPost)) : null,
+      post: post,
+      prevPost: prevPost ? prevPost : null,
+      nextPost: nextPost ? nextPost : null,
     },
     revalidate: 60,
   };

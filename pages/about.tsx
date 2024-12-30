@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 import { Post } from "@/types/post";
 import { SocialLink } from "@/types/basics";
 import basics from "@/data/basics.json";
-import posts from "@/data/posts.json";
+import postsData from "@/data/posts.json";
 import Header from "@/components/Header";
 import BusinessCard from "@/components/BusinessCard";
 import Instructions from "@/components/Instructions";
@@ -52,13 +52,19 @@ const AboutPage: NextPage<AboutPageProps> = ({ name, socialLinks, posts }) => {
 };
 
 export const getStaticProps: GetStaticProps<AboutPageProps> = async () => {
-  let sortedPosts: Post[] = posts.sort((a, b) => b.id - a.id);
+  const posts: Post[] = postsData
+    .filter((post) => post.featured)
+    .sort((a, b) => {
+      const orderA = a?.order ?? 0;
+      const orderB = b?.order ?? 0;
+      return orderA - orderB;
+    });
 
   return {
     props: {
       name: basics.name,
       socialLinks: basics.socialLinks,
-      posts: sortedPosts,
+      posts: posts,
     },
     revalidate: 60,
   };

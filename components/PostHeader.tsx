@@ -16,7 +16,7 @@ const PostHeader: React.FC<PostHeaderProps> = ({
   path,
 }) => {
   return (
-    <div className="flex justify-between text-lg sm:text-xl md:text-2xl">
+    <div className="flex justify-between text-lg sm:text-xl md:text-3xl">
       {prevId ? (
         <Link
           href={`/${path}/${prevId}`}
