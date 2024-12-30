@@ -3,7 +3,7 @@ User-agent: *
 Allow: /
 
 # Host
-Host: https://allensaliens.com
+Host: https://www.allensaliens.com
 
 # Sitemaps
-Sitemap: https://allensaliens.com/sitemap.xml
+Sitemap: https://www.allensaliens.com/sitemap.xml
