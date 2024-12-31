@@ -91,7 +91,7 @@ const Post = ({ name, socialLinks, post, prevPost, nextPost }: PostProps) => {
       <Head>
         <title>{`${name} | ${caption.title}`}</title>
         <meta name="description" content={`${caption.title}`} key="desc" />
-        <meta name="robots" content="noindex, nofollow" />
+        <meta name="robots" content="index, follow" />
         <meta
           property="og:image"
           content={`/${images[currentImageIndex]}`}
