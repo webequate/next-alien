@@ -145,6 +145,24 @@ const Post = ({ name, socialLinks, post, prevPost, nextPost }: PostProps) => {
             )}
           </div>
 
+          {/* Dots Navigation */}
+          {images.length > 1 && (
+            <div className="flex justify-center mt-2 mb-4 space-x-2">
+              {images.map((_, index) => (
+                <button
+                  key={index}
+                  onClick={() => setCurrentImageIndex(index)}
+                  className={`w-3 h-3 rounded-full ${
+                    index === currentImageIndex
+                      ? "bg-accent-dark dark:bg-accent-light"
+                      : "bg-dark-3 dark:bg-light-3"
+                  }`}
+                  aria-label={`Select Image ${index + 1}`}
+                />
+              ))}
+            </div>
+          )}
+
           <PostFooter additional={caption.additional} />
         </div>
       </motion.div>
