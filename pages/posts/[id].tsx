@@ -63,20 +63,8 @@ const Post = ({ name, socialLinks, post, prevPost, nextPost }: PostProps) => {
   };
 
   const handlers = useSwipeable({
-    onSwipedLeft: () => {
-      if (currentImageIndex < images.length - 1) {
-        handleNextImage();
-      } else if (nextPost) {
-        router.push(`/posts/${nextPost?.id}`);
-      }
-    },
-    onSwipedRight: () => {
-      if (currentImageIndex > 0) {
-        handlePrevImage();
-      } else if (prevPost) {
-        router.push(`/posts/${prevPost?.id}`);
-      }
-    },
+    onSwipedLeft: handleNextImage,
+    onSwipedRight: handlePrevImage,
     preventScrollOnSwipe: true,
     trackTouch: true,
     trackMouse: false,

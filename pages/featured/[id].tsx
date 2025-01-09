@@ -63,24 +63,8 @@ const Post = ({ name, socialLinks, post, prevPost, nextPost }: PostProps) => {
   };
 
   const handlers = useSwipeable({
-    onSwipedLeft: () => {
-      if (nextPost) {
-        if (currentImageIndex < images.length - 1) {
-          handleNextImage();
-        } else if (nextPost) {
-          router.push(`/featured/${nextPost?.id}`);
-        }
-      }
-    },
-    onSwipedRight: () => {
-      if (prevPost) {
-        if (currentImageIndex > 0) {
-          handlePrevImage();
-        } else if (prevPost) {
-          router.push(`/featured/${prevPost?.id}`);
-        }
-      }
-    },
+    onSwipedLeft: handleNextImage,
+    onSwipedRight: handlePrevImage,
     preventScrollOnSwipe: true,
     trackTouch: true,
     trackMouse: false,
