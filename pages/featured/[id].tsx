@@ -99,7 +99,7 @@ const Post = ({ name, socialLinks, post, prevPost, nextPost }: PostProps) => {
           />
           <div
             {...handlers}
-            className="flex items-center justify-between mx-auto w-fit mt-2 pb-2"
+            className="flex items-center justify-center mx-auto w-fit mt-2 pb-2"
           >
             {/* Left Navigation */}
             {currentImageIndex > 0 ? (
