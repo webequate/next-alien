@@ -32,7 +32,6 @@ const Post = ({ name, socialLinks, post, prevPost, nextPost }: PostProps) => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
   const images = Array.isArray(post.uri) ? post.uri : [post.uri];
-  // console.log("images is ", post.uri);
 
   useEffect(() => {
     const checkMobile = () => {
@@ -105,11 +104,14 @@ const Post = ({ name, socialLinks, post, prevPost, nextPost }: PostProps) => {
             {currentImageIndex > 0 ? (
               <FaChevronLeft
                 onClick={handlePrevImage}
-                className="sm:hover:text-accent-dark sm:dark:hover:text-accent-light text-xl sm:text-2xl md:text-4xl cursor-pointer"
+                className="sm:hover:text-accent-dark sm:dark:hover:text-accent-light mr-4 text-xl sm:text-2xl md:text-4xl cursor-pointer"
                 aria-label="Previous Image"
               />
             ) : (
-              <div className="w-6" /> /* Placeholder for alignment if no button */
+              <FaChevronLeft
+                className="mr-4 text-xl sm:text-2xl md:text-4xl opacity-0 pointer-events-none"
+                aria-hidden="true"
+              />
             )}
 
             <Image
@@ -125,11 +127,14 @@ const Post = ({ name, socialLinks, post, prevPost, nextPost }: PostProps) => {
             {currentImageIndex < images.length - 1 ? (
               <FaChevronRight
                 onClick={handleNextImage}
-                className="sm:hover:text-accent-dark sm:dark:hover:text-accent-light text-xl sm:text-2xl md:text-4xl cursor-pointer"
+                className="sm:hover:text-accent-dark sm:dark:hover:text-accent-light ml-4 text-xl sm:text-2xl md:text-4xl cursor-pointer"
                 aria-label="Next Image"
               />
             ) : (
-              <div className="w-6" /> /* Placeholder for alignment if no button */
+              <FaChevronRight
+                className="ml-4 text-xl sm:text-2xl md:text-4xl opacity-0 pointer-events-none"
+                aria-hidden="true"
+              />
             )}
           </div>
 
