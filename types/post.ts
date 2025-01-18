@@ -2,8 +2,8 @@
 export type Post = {
   id: number;
   creation_timestamp: number;
-  uri: string | string[];
   title: string;
+  uri: string | string[];
   featured?: boolean;
-  order?: number;
+  order?: number | undefined;
 };

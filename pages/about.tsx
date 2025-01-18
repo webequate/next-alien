@@ -15,10 +15,14 @@ import Footer from "@/components/Footer";
 interface AboutPageProps {
   name: string;
   socialLinks: SocialLink[];
-  posts: Post[];
+  featuredPosts: Post[];
 }
 
-const AboutPage: NextPage<AboutPageProps> = ({ name, socialLinks, posts }) => {
+const AboutPage: NextPage<AboutPageProps> = ({
+  name,
+  socialLinks,
+  featuredPosts,
+}) => {
   return (
     <div className="mx-auto">
       <Head>
@@ -43,7 +47,7 @@ const AboutPage: NextPage<AboutPageProps> = ({ name, socialLinks, posts }) => {
 
         <Instructions socialLink={socialLinks[0]} />
 
-        <PostGrid posts={posts} path="featured" />
+        <PostGrid posts={featuredPosts} path="featured" />
       </motion.div>
 
       <Footer name={name} socialLinks={socialLinks} />
@@ -52,7 +56,7 @@ const AboutPage: NextPage<AboutPageProps> = ({ name, socialLinks, posts }) => {
 };
 
 export const getStaticProps: GetStaticProps<AboutPageProps> = async () => {
-  const posts: Post[] = postsData
+  const featuredPosts: Post[] = postsData
     .filter((post) => post.featured)
     .sort((a, b) => {
       const orderA = a?.order ?? 0;
@@ -64,7 +68,7 @@ export const getStaticProps: GetStaticProps<AboutPageProps> = async () => {
     props: {
       name: basics.name,
       socialLinks: basics.socialLinks,
-      posts: posts,
+      featuredPosts: featuredPosts,
     },
     revalidate: 60,
   };

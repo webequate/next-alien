@@ -63,7 +63,7 @@ a {
   .nav-primary a {
     @apply hover:text-accent-dark dark:hover:text-accent-light mx-2 md:mx-4 py-1 md:py-2 transition duration-300;
   }
-  .nav-primary a.active {
+  .nav-primary a.active, .nav-secondary a.active, .nav-mobile a.active {
     @apply text-accent-dark dark:text-accent-light;
   }
   /* Secondary navigation */

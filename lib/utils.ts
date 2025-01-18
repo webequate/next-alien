@@ -13,3 +13,33 @@ export const parseAlienCaption = (caption: string) => {
   const additional = filteredArray.slice(1);
   return { title, additional };
 };
+
+export const getFileTypeFromExtension = (fileName: string) => {
+  const imageExtensions = [
+    ".jpg",
+    ".jpeg",
+    ".png",
+    ".gif",
+    ".webp",
+    ".bmp",
+    ".svg",
+  ];
+  const videoExtensions = [
+    ".mp4",
+    ".mov",
+    ".avi",
+    ".mkv",
+    ".webm",
+    ".flv",
+    ".wmv",
+  ];
+  const lowerCaseFileName = fileName.toLowerCase();
+
+  if (imageExtensions.some((ext) => lowerCaseFileName.endsWith(ext))) {
+    return "image";
+  }
+  if (videoExtensions.some((ext) => lowerCaseFileName.endsWith(ext))) {
+    return "video";
+  }
+  return "other";
+};
