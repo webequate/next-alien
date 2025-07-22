@@ -33,6 +33,7 @@ export const getFileTypeFromExtension = (fileName: string) => {
     ".flv",
     ".wmv",
   ];
+  if (!fileName) return "other";
   const lowerCaseFileName = fileName.toLowerCase();
 
   if (imageExtensions.some((ext) => lowerCaseFileName.endsWith(ext))) {
