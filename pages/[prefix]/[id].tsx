@@ -194,15 +194,15 @@ export const getStaticPaths: GetStaticPaths = async () => {
       });
     }
 
-    let postType = getFileTypeFromExtension(post.uri[0]);
+    // let postType = getFileTypeFromExtension(post.uri[0]);
 
-    if (postType === "image") {
-      postPaths.push({ params: { prefix: "images", id: post.id.toString() } });
-    }
+    // if (postType === "image") {
+    //   postPaths.push({ params: { prefix: "images", id: post.id.toString() } });
+    // }
 
-    if (postType === "video") {
-      postPaths.push({ params: { prefix: "videos", id: post.id.toString() } });
-    }
+    // if (postType === "video") {
+    //   postPaths.push({ params: { prefix: "videos", id: post.id.toString() } });
+    // }
 
     return postPaths;
   });
