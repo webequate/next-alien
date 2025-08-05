@@ -44,7 +44,7 @@ const ContactForm: React.FC = () => {
         onSubmit={handleSubmit}
         className="bg-light-1 dark:bg-dark-1 rounded-xl text-left p-6 sm:p-8"
       >
-        <Heading text="Contact Details" />
+        <Heading text="Contact Form" />
         <FormInput
           inputLabel="Full Name"
           labelFor="name"
