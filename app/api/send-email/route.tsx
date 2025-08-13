@@ -4,7 +4,37 @@ import type { ContactForm } from "@/interfaces/ContactForm";
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
+function ensureEnv() {
+  const required = [
+    "EMAIL_FROM",
+    "EMAIL_TO",
+    // optional: EMAIL_CC,
+    "GMAIL_USER",
+    "GMAIL_APP_PASS",
+  ];
+  const missing = required.filter((k) => !process.env[k]);
+  if (missing.length) {
+    const msg = `Missing environment variables: ${missing.join(", ")}`;
+    throw new Error(msg);
+  }
+}
+
+function validateBody(body: any): asserts body is ContactForm {
+  if (!body || typeof body !== "object") throw new Error("Invalid payload");
+  const fields: Array<keyof ContactForm> = [
+    "name",
+    "email",
+    "subject",
+    "message",
+  ];
+  const missing = fields.filter((f) => !body[f] || typeof body[f] !== "string");
+  if (missing.length) {
+    throw new Error(`Missing fields: ${missing.join(", ")}`);
+  }
+}
+
 async function sendEmail(formData: ContactForm) {
+  ensureEnv();
   const { default: sendMail } = await import("@/emails");
   const { default: Contact } = await import("@/emails/Contact");
 
@@ -32,12 +62,19 @@ async function sendEmail(formData: ContactForm) {
 
 export async function POST(request: Request) {
   try {
-    const formData = (await request.json()) as ContactForm;
+    const formData = (await request.json()) as unknown;
+    validateBody(formData);
     await sendEmail(formData);
     return NextResponse.json({ message: "Email sent successfully!" });
   } catch (error) {
+    const isDev = process.env.NODE_ENV !== "production";
+    const details = error instanceof Error ? error.message : "Unknown error";
     return NextResponse.json(
-      { message: "Error sending email." },
+      {
+        message: isDev
+          ? `Error sending email: ${details}`
+          : "Error sending email.",
+      },
       { status: 500 }
     );
   }

@@ -1,6 +1,7 @@
 // emails/index.ts
 import nodemailer from "nodemailer";
 import { buildSendMail } from "mailing-core";
+import path from "path";
 
 const transport = nodemailer.createTransport({
   host: "smtp.gmail.com",
@@ -15,7 +16,8 @@ const transport = nodemailer.createTransport({
 const sendMail = buildSendMail({
   transport,
   defaultFrom: "WebEquate <webequate@gmail.com>",
-  configPath: "./mailing.config.json",
+  // Resolve config path from project root so it works in any working directory
+  configPath: path.join(process.cwd(), "mailing.config.json"),
 });
 
 export default sendMail;
