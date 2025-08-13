@@ -1,36 +1,33 @@
-// components/Footer.tsx
-import { SocialLink } from "@/types/basics";
+"use client";
+// components/Footer.tsx (App Router compatible)
+import type { SocialLink } from "@/types/basics";
 import Social from "@/components/Social";
 import Copyright from "@/components/Copyright";
 import WebEquate from "@/components/WebEquate";
 import Link from "next/link";
-import { useRouter } from "next/router";
+import { usePathname } from "next/navigation";
 
 interface FooterProps {
   name: string;
   socialLinks: SocialLink[];
 }
 
-const Footer: React.FC<FooterProps> = ({ name, socialLinks }) => {
-  const router = useRouter();
-  const asPath = router.asPath;
+export default function Footer({ name, socialLinks }: FooterProps) {
+  const pathname = usePathname() || "/";
+  const asPath = pathname;
 
   // Determine if the link should be active based on the prefix in the path
   const isActive = (path: string) => {
-    if (path === "/") {
-      return asPath === "/" || asPath.startsWith("/posts"); // Home & posts
-    }
-    if (path === "/about") {
-      return asPath.startsWith("/about") || asPath.startsWith("/featured"); // About & featured
-    }
-    return asPath.startsWith(path); // Other prefixes
+    if (path === "/") return asPath === "/" || asPath.startsWith("/posts"); // Home & posts
+    if (path === "/about")
+      return pathname.startsWith("/about") || pathname.startsWith("/featured"); // About & featured
+    return pathname.startsWith(path);
   };
 
   return (
     <div className="mx-auto">
       <div className="pb-8 mt-4 border-t-2 border-light-1 dark:border-dark-2">
         <div>
-          {/* Footer links - large screen */}
           <div className="m-0 mt-8 hidden sm:flex sm:p-0 justify-center items-center">
             <div className="nav-secondary">
               <Link
@@ -69,6 +66,4 @@ const Footer: React.FC<FooterProps> = ({ name, socialLinks }) => {
       </div>
     </div>
   );
-};
-
-export default Footer;
+}

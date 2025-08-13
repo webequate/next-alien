@@ -1,3 +1,4 @@
+"use client";
 // components/ContactForm.tsx
 import Heading from "@/components/Heading";
 import { useState } from "react";

@@ -1,7 +1,8 @@
-// components/Header.tsx
+"use client";
+// components/Header.tsx (App Router compatible)
 import Link from "next/link";
 import { useState } from "react";
-import { useRouter } from "next/router";
+import { usePathname } from "next/navigation";
 import type { SocialLink } from "@/types/basics";
 import AllensAliens from "@/components/AllensAliens";
 import SocialButton from "@/components/SocialButton";
@@ -12,19 +13,16 @@ interface HeaderProps {
   socialLink: SocialLink;
 }
 
-const Header: React.FC<HeaderProps> = ({ socialLink }) => {
+export default function Header({ socialLink }: HeaderProps) {
   const [showMenu, setShowMenu] = useState(false);
-  const router = useRouter();
-  const asPath = router.asPath;
+  const pathname = usePathname() || "/";
+  const asPath = pathname;
 
   // Determine if the link should be active based on the prefix in the path
   const isActive = (path: string) => {
-    if (path === "/") {
-      return asPath === "/" || asPath.startsWith("/posts"); // Home & posts
-    }
-    if (path === "/about") {
+    if (path === "/") return asPath === "/" || asPath.startsWith("/posts"); // Home & posts
+    if (path === "/about")
       return asPath.startsWith("/about") || asPath.startsWith("/featured"); // About & featured
-    }
     return asPath.startsWith(path); // Other prefixes
   };
 
@@ -80,7 +78,10 @@ const Header: React.FC<HeaderProps> = ({ socialLink }) => {
 
           {/* Hamburger menu - Small screen */}
           <div className="flex md:hidden">
-            <Hamburger showMenu={showMenu} toggleMenu={toggleMenu} />
+            <Hamburger
+              showMenu={showMenu}
+              toggleMenu={() => setShowMenu((s) => !s)}
+            />
           </div>
 
           {/* Theme switcher */}
@@ -116,6 +117,4 @@ const Header: React.FC<HeaderProps> = ({ socialLink }) => {
       </div>
     </nav>
   );
-};
-
-export default Header;
+}

@@ -9,6 +9,7 @@ export type Basics = {
   _id: string;
   name: string;
   titles: string[];
+  description: string;
   abouts: string[];
   email: string;
   socialLinks: SocialLink[];

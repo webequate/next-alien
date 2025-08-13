@@ -18,14 +18,14 @@ const PostGrid: React.FC<PostGridProps> = ({ posts, path }) => {
           <Link
             key={post.id}
             href={`/${path}/${post.id}`}
-            className="group relative cursor-pointer"
+            className="group relative block cursor-pointer"
           >
             <Image
               src={`/${Array.isArray(post.uri) ? post.uri[0] : post.uri}`}
               alt={caption.title}
               width={320}
               height={400}
-              className="rounded shadow-md md:transition md:duration-200 md:ease-in-out md:transform"
+              className="w-full h-auto rounded shadow-md md:transition md:duration-200 md:ease-in-out md:transform"
             />
             <div className="absolute inset-0 bg-black opacity-0 md:group-hover:opacity-50 transition duration-200 rounded shadow-md"></div>
             <div className="absolute inset-0 items-center justify-center opacity-0 md:group-hover:opacity-100 transition duration-200 p-4">

@@ -2,12 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=Bruno+Ace&display=swap');
-
-.bruno {
-  font-family: 'Bruno Ace', ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
-  font-weight: 400;
-}
+/* Bruno font is applied via next/font in components/AllensAliens.tsx only. */
 
 html,
 body {
