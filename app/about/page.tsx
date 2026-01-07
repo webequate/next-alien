@@ -11,6 +11,9 @@ export const metadata = {
   title: `${basics.name} | About`,
   description: "Learn about Allen's Aliens.",
   robots: "index, follow",
+  alternates: {
+    canonical: '/about',
+  },
 };
 
 export default function AboutPage() {

@@ -39,6 +39,9 @@ export async function generateMetadata({
   return {
     title: `${basics.name} | ${post.title}`,
     description: post.title,
+    alternates: {
+      canonical: `/${prefix}/${id}`,
+    },
     openGraph: {
       images: [imageUrl],
     },
