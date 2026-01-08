@@ -8,7 +8,7 @@ export const metadata = {
   description: "Send a message to Allen's Aliens.",
   robots: { index: true, follow: true },
   alternates: {
-    canonical: '/contact',
+    canonical: "/contact",
   },
 };
 

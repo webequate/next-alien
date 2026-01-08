@@ -12,7 +12,7 @@ export const metadata = {
   description: "Learn about Allen's Aliens.",
   robots: "index, follow",
   alternates: {
-    canonical: '/about',
+    canonical: "/about",
   },
 };
 
