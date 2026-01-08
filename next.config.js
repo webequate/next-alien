@@ -2,14 +2,14 @@ module.exports = {
   async redirects() {
     return [
       {
-        source: '/:path*',
+        source: "/:path*",
         has: [
           {
-            type: 'host',
-            value: 'www.allensaliens.com',
+            type: "host",
+            value: "www.allensaliens.com",
           },
         ],
-        destination: 'https://allensaliens.com/:path*',
+        destination: "https://allensaliens.com/:path*",
         permanent: true,
       },
     ];
