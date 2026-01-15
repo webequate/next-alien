@@ -7,7 +7,7 @@ const WebEquate: React.FC = () => {
       <div className="text-sm text-dark-2 dark:text-light-2">
         Website by{" "}
         <Link
-          href="http://www.webequate.com"
+          href="https://webequate.com"
           aria-label="WebEquate"
           target="_blank"
           className="hover:text-accent-dark dark:hover:text-accent-light"
