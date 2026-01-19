@@ -1,19 +1,4 @@
 module.exports = {
-  async redirects() {
-    return [
-      {
-        source: "/:path*",
-        has: [
-          {
-            type: "host",
-            value: "www.allensaliens.com",
-          },
-        ],
-        destination: "https://allensaliens.com/:path*",
-        permanent: true,
-      },
-    ];
-  },
   webpack(config) {
     // Grab the existing rule that handles SVG imports
     const fileLoaderRule = config.module.rules.find((rule) =>
