@@ -36,6 +36,11 @@ export default async function handler(
 
   try {
     const formData: ContactForm = req.body;
+
+    if (formData.website) {
+      return res.status(400).json({ message: "Invalid submission." });
+    }
+
     await sendEmail(formData);
     res.status(200).json({ message: "Email sent successfully!" });
   } catch (error: any) {

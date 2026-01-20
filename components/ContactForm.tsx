@@ -11,6 +11,7 @@ const ContactForm: React.FC = () => {
     email: "",
     subject: "",
     message: "",
+    website: "",
   });
 
   const handleChange = (
@@ -36,6 +37,7 @@ const ContactForm: React.FC = () => {
       email: "",
       subject: "",
       message: "",
+      website: "",
     });
   };
 
@@ -99,6 +101,16 @@ const ContactForm: React.FC = () => {
             required
           ></textarea>
         </div>
+
+        <input
+          type="text"
+          name="website"
+          value={formData.website}
+          onChange={handleChange}
+          style={{ display: "none" }}
+          tabIndex={-1}
+          autoComplete="off"
+        />
 
         <div>
           <button
