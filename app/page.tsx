@@ -24,8 +24,6 @@ export const metadata: Metadata = {
     images: [
       {
         url: "https://allensaliens.com/images/og-alien.jpg",
-        width: 1200,
-        height: 630,
         alt: basics.name,
       },
     ],
