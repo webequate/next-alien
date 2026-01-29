@@ -38,12 +38,12 @@ export async function generateMetadata({
   const assets = Array.isArray(post.uri) ? post.uri : [post.uri];
   const imageUrl = `/${assets[0]}`;
   const metadata = generatePostMetadata(post.title, id, prefix, imageUrl);
-  
+
   // Featured posts are duplicates, so don't index them
   if (prefix === "featured") {
     metadata.robots = { index: false, follow: false };
   }
-  
+
   return metadata;
 }
 
