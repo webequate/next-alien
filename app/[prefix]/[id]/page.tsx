@@ -3,6 +3,7 @@ import postsData from "@/data/posts.json";
 import type { Post } from "@/types/post";
 import type { Metadata } from "next";
 import { getFileTypeFromExtension } from "@/lib/utils";
+import { generatePostMetadata } from "@/lib/metadata";
 import ContentFade from "@/components/ContentFade";
 import PostDetail from "./PostDetail";
 
@@ -36,16 +37,14 @@ export async function generateMetadata({
 
   const assets = Array.isArray(post.uri) ? post.uri : [post.uri];
   const imageUrl = `/${assets[0]}`;
-  return {
-    title: `${basics.name} | ${post.title}`,
-    description: post.title,
-    alternates: {
-      canonical: `/${prefix}/${id}`,
-    },
-    openGraph: {
-      images: [imageUrl],
-    },
-  };
+  const metadata = generatePostMetadata(post.title, id, prefix, imageUrl);
+  
+  // Featured posts are duplicates, so don't index them
+  if (prefix === "featured") {
+    metadata.robots = { index: false, follow: false };
+  }
+  
+  return metadata;
 }
 
 export default function PostPage({

@@ -2,17 +2,35 @@ import basics from "@/data/basics.json";
 import postsData from "@/data/posts.json";
 import type { Post } from "@/types/post";
 import type { SocialLink } from "@/types/basics";
+import type { Metadata } from "next";
+import { generateBaseMetadata } from "@/lib/metadata";
 import ContentFade from "@/components/ContentFade";
 import BusinessCard from "@/components/BusinessCard";
 import Instructions from "@/components/Instructions";
 import PostGrid from "@/components/PostGrid";
 
-export const metadata = {
-  title: `${basics.name} | About`,
-  description: "Learn about Allen's Aliens.",
-  robots: "index, follow",
-  alternates: {
-    canonical: "/about",
+export const metadata: Metadata = {
+  ...generateBaseMetadata(
+    `About | ${basics.name}`,
+    "Learn about Allen's Aliens and featured work.",
+    "/about",
+    "https://allensaliens.com/images/og-alien.jpg"
+  ),
+  openGraph: {
+    ...generateBaseMetadata(
+      `About | ${basics.name}`,
+      "Learn about Allen's Aliens and featured work.",
+      "/about",
+      "https://allensaliens.com/images/og-alien.jpg"
+    ).openGraph,
+    images: [
+      {
+        url: "https://allensaliens.com/images/og-alien.jpg",
+        width: 1200,
+        height: 630,
+        alt: basics.name,
+      },
+    ],
   },
 };
 

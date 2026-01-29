@@ -1,14 +1,32 @@
 import basics from "@/data/basics.json";
+import type { Metadata } from "next";
+import { generateBaseMetadata } from "@/lib/metadata";
 import ContentFade from "@/components/ContentFade";
 import ContactForm from "@/components/ContactForm";
 import ContactDetails from "@/components/ContactDetails";
 
-export const metadata = {
-  title: `${basics.name} | Contact`,
-  description: "Send a message to Allen's Aliens.",
-  robots: { index: true, follow: true },
-  alternates: {
-    canonical: "/contact",
+export const metadata: Metadata = {
+  ...generateBaseMetadata(
+    `Contact | ${basics.name}`,
+    "Send a message to Allen's Aliens. Get in touch to share your own alien or learn more.",
+    "/contact",
+    "https://allensaliens.com/images/og-alien.jpg"
+  ),
+  openGraph: {
+    ...generateBaseMetadata(
+      `Contact | ${basics.name}`,
+      "Send a message to Allen's Aliens. Get in touch to share your own alien or learn more.",
+      "/contact",
+      "https://allensaliens.com/images/og-alien.jpg"
+    ).openGraph,
+    images: [
+      {
+        url: "https://allensaliens.com/images/og-alien.jpg",
+        width: 1200,
+        height: 630,
+        alt: basics.name,
+      },
+    ],
   },
 };
 

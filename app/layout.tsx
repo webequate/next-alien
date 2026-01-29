@@ -36,12 +36,16 @@ export const metadata: Metadata = {
     images: [
       {
         url: "https://allensaliens.com/images/alien-og.jpg",
-        width: 1200,
-        height: 630,
         alt: "Allen's Aliens",
       },
     ],
     type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: basics.name,
+    description: basics.description || basics.name,
+    images: ["https://allensaliens.com/images/alien-og.jpg"],
   },
 };
 
