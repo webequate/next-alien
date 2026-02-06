@@ -1,13 +1,21 @@
 "use client";
-import { ReactNode } from "react";
-import { usePathname } from "next/navigation";
+import { ReactNode, useEffect } from "react";
+
+let hasNavigated = false;
 
 export default function ContentFade({ children }: { children: ReactNode }) {
-  const pathname = usePathname();
-  const key = pathname ?? "__root__";
+  useEffect(() => {
+    if (!hasNavigated) {
+      hasNavigated = true;
+    }
+  }, []);
 
   return (
-    <div key={key} className="w-full bg-white dark:bg-neutral-900 fade-in">
+    <div
+      className={`w-full bg-white dark:bg-neutral-900${
+        hasNavigated ? " fade-in" : ""
+      }`}
+    >
       {children}
     </div>
   );
