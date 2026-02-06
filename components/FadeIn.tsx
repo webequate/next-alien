@@ -1,6 +1,5 @@
 "use client";
 
-import { motion } from "framer-motion";
 import React from "react";
 
 type Props = {
@@ -14,14 +13,13 @@ export default function FadeIn({
   className = "",
   delay = 0.2,
 }: Props) {
+  const animationDelay = `${delay}s`;
   return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ ease: "easeInOut", duration: 0.9, delay }}
-      className={className}
+    <div
+      className={`fade-in-delayed ${className}`}
+      style={{ animationDelay }}
     >
       {children}
-    </motion.div>
+    </div>
   );
 }
