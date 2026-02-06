@@ -15,10 +15,7 @@ export default function FadeIn({
 }: Props) {
   const animationDelay = `${delay}s`;
   return (
-    <div
-      className={`fade-in-delayed ${className}`}
-      style={{ animationDelay }}
-    >
+    <div className={`fade-in-delayed ${className}`} style={{ animationDelay }}>
       {children}
     </div>
   );
