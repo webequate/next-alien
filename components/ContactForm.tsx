@@ -5,6 +5,8 @@ import { useState } from "react";
 import { ContactForm as ContactFormData } from "@/interfaces/ContactForm";
 import FormInput from "@/components/FormInput";
 
+type MessageType = "success" | "error" | null;
+
 const ContactForm: React.FC = () => {
   const [formData, setFormData] = useState<ContactFormData>({
     name: "",
@@ -13,6 +15,9 @@ const ContactForm: React.FC = () => {
     message: "",
     website: "",
   });
+  const [isLoading, setIsLoading] = useState(false);
+  const [statusMessage, setStatusMessage] = useState<string>("");
+  const [messageType, setMessageType] = useState<MessageType>(null);
 
   const handleChange = (
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -23,22 +28,40 @@ const ContactForm: React.FC = () => {
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
-    const response = await fetch("/api/send-email", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(formData),
-    });
+    setIsLoading(true);
+    setStatusMessage("");
+    setMessageType(null);
 
-    const result = await response.json();
-    alert(result.message);
+    try {
+      const response = await fetch("/api/send-email", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
 
-    setFormData({
-      name: "",
-      email: "",
-      subject: "",
-      message: "",
-      website: "",
-    });
+      const result = await response.json();
+
+      if (response.ok) {
+        setStatusMessage(result.message || "Email sent successfully!");
+        setMessageType("success");
+        setFormData({
+          name: "",
+          email: "",
+          subject: "",
+          message: "",
+          website: "",
+        });
+      } else {
+        setStatusMessage(result.message || "Failed to send email.");
+        setMessageType("error");
+      }
+    } catch (error) {
+      setStatusMessage("An error occurred while sending the email.");
+      setMessageType("error");
+      console.error("Email send error:", error);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -115,11 +138,25 @@ const ContactForm: React.FC = () => {
         <div>
           <button
             type="submit"
+            disabled={isLoading}
             aria-label="Send Message"
-            className="text-light-1 dark:text-light-1 bg-accent-dark dark:bg-accent-dark hover:bg-accent-light dark:hover:bg-accent-light font-general-medium flex justify-center items-center w-40 sm:w-40 mb-6 sm:mb-0 text-lg py-2.5 sm:py-3 rounded-lg duration-300"
+            className="text-light-1 dark:text-light-1 bg-accent-dark dark:bg-accent-dark hover:bg-accent-light dark:hover:bg-accent-light disabled:opacity-50 disabled:cursor-not-allowed font-general-medium flex justify-center items-center w-40 sm:w-40 mb-6 sm:mb-0 text-lg py-2.5 sm:py-3 rounded-lg duration-300"
           >
-            <span className="text-sm sm:text-lg">Send Message</span>
+            <span className="text-sm sm:text-lg">
+              {isLoading ? "Sending..." : "Send Message"}
+            </span>
           </button>
+          {statusMessage && (
+            <div
+              className={`mt-4 text-lg font-medium ${
+                messageType === "success"
+                  ? "text-green-600 dark:text-green-400"
+                  : "text-red-600 dark:text-red-400"
+              }`}
+            >
+              {statusMessage}
+            </div>
+          )}
         </div>
       </form>
     </div>

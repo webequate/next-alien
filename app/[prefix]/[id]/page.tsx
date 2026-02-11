@@ -20,9 +20,9 @@ export async function generateStaticParams() {
 export async function generateMetadata({
   params,
 }: {
-  params: { prefix: string; id: string };
+  params: Promise<{ prefix: string; id: string }>;
 }): Promise<Metadata> {
-  const { prefix, id } = params;
+  const { prefix, id } = await params;
   const posts = postsData as Post[];
   // Mirror the same filtering used in the page for consistency
   const filtered = posts.filter((post) => {
@@ -47,12 +47,12 @@ export async function generateMetadata({
   return metadata;
 }
 
-export default function PostPage({
+export default async function PostPage({
   params,
 }: {
-  params: { prefix: string; id: string };
+  params: Promise<{ prefix: string; id: string }>;
 }) {
-  const { prefix, id } = params;
+  const { prefix, id } = await params;
 
   const filteredAndSortedPosts = (postsData as Post[])
     .filter((post) => {
