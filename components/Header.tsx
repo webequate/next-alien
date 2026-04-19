@@ -26,10 +26,6 @@ export default function Header({ socialLink }: HeaderProps) {
     return asPath.startsWith(path); // Other prefixes
   };
 
-  function toggleMenu() {
-    setShowMenu(!showMenu);
-  }
-
   return (
     <nav>
       {/* Home link */}

@@ -55,7 +55,7 @@ function buildReplyMailto(formData: ContactForm): string {
   return mailtoHref;
 }
 
-function buildHtmlEmail(formData: ContactForm, receivedAt: string): string {
+function buildHtmlEmail(formData: ContactForm, _receivedAt: string): string {
   const name = escapeHtml(formData.name);
   const email = escapeHtml(formData.email);
   const subject = escapeHtml(formData.subject || "New contact form submission");

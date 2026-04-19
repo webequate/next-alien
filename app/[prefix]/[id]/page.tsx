@@ -1,4 +1,3 @@
-import basics from "@/data/basics.json";
 import postsData from "@/data/posts.json";
 import type { Post } from "@/types/post";
 import type { Metadata } from "next";

@@ -35,7 +35,6 @@ export const metadata: Metadata = {
 };
 
 export default function AboutPage() {
-  const name = basics.name as string;
   const socialLinks = basics.socialLinks as SocialLink[];
   const featuredPosts: Post[] = (postsData as Post[])
     .filter((post) => post.featured)

@@ -4,7 +4,6 @@ import Image from "next/image";
 import NavButton from "@/components/NavButton";
 import PostFooter from "@/components/PostFooter";
 import PostHeader from "@/components/PostHeader";
-import { usePathname, useSearchParams } from "next/navigation";
 import { useSwipeable } from "react-swipeable";
 import { useEffect, useMemo, useState } from "react";
 import { getFileTypeFromExtension, parseAlienCaption } from "@/lib/utils";
@@ -22,16 +21,8 @@ export default function PostDetail({
   prefix: string;
 }) {
   const caption = useMemo(() => parseAlienCaption(post.title), [post.title]);
-  const [isMobile, setIsMobile] = useState(false);
   const [currentAssetIndex, setCurrentAssetIndex] = useState(0);
   const assets = Array.isArray(post.uri) ? post.uri : [post.uri];
-
-  useEffect(() => {
-    const checkMobile = () => setIsMobile(window.innerWidth < 640);
-    window.addEventListener("resize", checkMobile);
-    checkMobile();
-    return () => window.removeEventListener("resize", checkMobile);
-  }, []);
 
   useEffect(() => {
     setCurrentAssetIndex(0);
