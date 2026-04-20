@@ -8,7 +8,7 @@ Track which pages have been indexed by Google or have had indexing requested.
 - [ ] https://allensaliens.com/about
 - [ ] https://allensaliens.com/contact
 
-## Blog Posts
+## Posts
 
 - [ ] https://allensaliens.com/posts/1
 - [ ] https://allensaliens.com/posts/2
@@ -391,4 +391,4 @@ Track which pages have been indexed by Google or have had indexing requested.
 
 **Total URLs: 377** (3 main pages + 374 blog posts)
 
-*Last updated: February 9, 2026*
+*Last updated: April 19, 2026*
