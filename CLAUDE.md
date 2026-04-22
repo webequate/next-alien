@@ -385,6 +385,57 @@ export const metadata: Metadata = {
 
 ---
 
+## Testing
+
+**Stack:** Vitest + React Testing Library. Vitest uses Vite (not Turbopack) for test compilation — they coexist independently.
+
+**Config files:**
+
+| File | Purpose |
+|---|---|
+| `vitest.config.ts` | jsdom environment, globals, `@/` alias pointing to project root |
+| `vitest.setup.ts` | Imports `@testing-library/jest-dom` to extend `expect` with DOM matchers |
+
+**Running tests:**
+
+```bash
+npm test          # vitest watch mode
+npm run test:run  # single run (CI)
+```
+
+**Test location:** `__tests__/` mirroring source structure (`__tests__/lib/`, `__tests__/components/`, `__tests__/hooks/`).
+
+**What is tested:**
+- `lib/utils.ts` — all three utility functions
+- `lib/metadata.ts` — both metadata generators
+- `hooks/useThemeSwitcher.tsx` — mount restore, class application, localStorage persistence, loop-fix proof
+- `components/ContactForm.tsx` — full submission lifecycle (success, error, network failure, loading state, form reset, payload shape, honeypot)
+- `components/Header.tsx` — `isActive()` logic for all nav routes, hamburger open/close
+- `components/Hamburger.tsx` — click handler, SVG renders in both states
+- `components/NavButton.tsx` — enabled/disabled rendering, both directions
+- `components/ThemeSwitcher.tsx` — post-mount render, `setTheme` toggle
+- `components/PostGrid.tsx` — caption parsing, array/string `uri`, link hrefs, alt text
+- `components/FadeIn.tsx` — delay prop, default delay, className forwarding
+- `components/PostHeader.tsx` — conditional prev/next links, path in hrefs
+
+**What is not tested (purely presentational):** AllensAliens, BusinessCard, ContactDetails, ContentFade, Copyright, DownloadCV, Footer, Heading, Instructions, PostFooter, Social, SocialButton, WebEquate.
+
+### Mocking conventions
+
+- `next/navigation` → `vi.mock` with `usePathname: vi.fn()`
+- `next/link` → simple `<a href={href}>` passthrough
+- `next/image` → simple `<img src alt>` passthrough
+- `next-themes` → `vi.mock` with `useTheme: vi.fn()`
+- `fetch` → `vi.stubGlobal("fetch", vi.fn())`
+
+### Known gotchas
+
+- `ContactForm`'s submit button has a fixed `aria-label="Send Message"` that overrides its text as the accessible name. The "Sending..." loading state is only verifiable via `button.textContent`, not `getByRole({ name: /sending/i })`.
+- All `ContactForm` fields are `required`. Tests that submit the form must fill every field — jsdom enforces HTML5 validation and will silently block submission otherwise. Use the shared `fillForm()` helper.
+- When querying nav links in `Header` tests, scope to `.nav-primary` using `within()` — the logo link also has `aria-label="Home"` and appears first in the DOM.
+
+---
+
 ## Commands
 
 ```bash
@@ -393,6 +444,8 @@ npm run build          # production build
 npm run lint           # eslint . (ESLint v9 flat config)
 npm run format         # prettier --write on all source files
 npm run build:sitemap  # next-sitemap + custom sort script
+npm test               # vitest watch mode
+npm run test:run       # vitest single run (CI)
 ```
 
 ---
