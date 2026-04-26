@@ -26,7 +26,7 @@ const ContactForm: React.FC = () => {
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleSubmit = async (event: React.FormEvent) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setIsLoading(true);
     setStatusMessage("");
@@ -130,9 +130,10 @@ const ContactForm: React.FC = () => {
           name="website"
           value={formData.website}
           onChange={handleChange}
-          style={{ display: "none" }}
+          className="honeypot"
           tabIndex={-1}
           autoComplete="off"
+          aria-hidden="true"
         />
 
         <div>

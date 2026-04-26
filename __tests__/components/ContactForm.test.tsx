@@ -23,11 +23,13 @@ describe("ContactForm", () => {
     expect(screen.getByLabelText("Message")).toBeInTheDocument();
   });
 
-  it("renders the honeypot field hidden from users", () => {
+  it("renders the honeypot field with aria-hidden and off-screen CSS class", () => {
     render(<ContactForm />);
     const honeypot = document.querySelector('input[name="website"]');
     expect(honeypot).toBeInTheDocument();
-    expect(honeypot).toHaveStyle({ display: "none" });
+    expect(honeypot).toHaveClass("honeypot");
+    expect(honeypot).toHaveAttribute("aria-hidden", "true");
+    expect(honeypot).toHaveAttribute("tabindex", "-1");
   });
 
   it("shows 'Send Message' on the submit button initially", () => {

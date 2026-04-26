@@ -15,12 +15,6 @@ export const runtime = "nodejs";
 
 function validate(formData: ContactForm) {
   const errors: string[] = [];
-
-  // Honeypot check - if filled, it's a bot
-  if (formData.website) {
-    errors.push("Bot submission detected");
-  }
-
   if (!formData.name?.trim()) errors.push("Name is required");
   if (!formData.email?.match(/^[^@\s]+@[^@\s]+\.[^@\s]+$/))
     errors.push("Valid email is required");
@@ -173,6 +167,12 @@ async function sendEmail(formData: ContactForm) {
 export async function POST(request: Request) {
   try {
     const formData: ContactForm = await request.json();
+
+    // Honeypot: silently return success so bots get no signal they were caught
+    if (formData.website) {
+      return NextResponse.json({ message: "Email sent successfully!" });
+    }
+
     const errors = validate(formData);
     if (errors.length) {
       return NextResponse.json(

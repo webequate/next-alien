@@ -86,6 +86,17 @@ a {
   }
 }
 
+/* Honeypot field — visually hidden but not display:none (avoids bot detection) */
+.honeypot {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  opacity: 0;
+  pointer-events: none;
+}
+
 /* Prevent layout from shifting when scrollbar appears */
 html {
   scrollbar-gutter: stable both-edges;
